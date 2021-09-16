@@ -10,7 +10,7 @@ APPARATUS_ID = "2"
 EXPERIMENT_ID = "3"
 
 CONFIG_OF_EXP = []
-NEXT_EXECUTION = {}
+next_execution = {}
 MY_IP = "192.168.1.83"
 SEGREDO = "estou bem"
 SAVE_DATA = []
@@ -24,14 +24,16 @@ def GetConfig():
     return ''
 
 def GetExecution():
+    global next_execution
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
     response =  requests.get(api_url)
-    NEXT_EXECUTION = response.json()
-    print(json.dumps(NEXT_EXECUTION,indent=4))
+    next_execution = response.json()
+    print(json.dumps(next_execution,indent=4))
     return ''
 
 def SendPartialResult():
-    print(NEXT_EXECUTION)
+    global next_execution
+    print(next_execution)
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(NEXT_EXECUTION["execution_id"])
     todo = {"test":"ok"}
     response =  requests.post(api_url, json=todo)
@@ -43,5 +45,5 @@ def SendPartialResult():
 if __name__ == "__main__":
     GetConfig()
     GetExecution()
-    print(json.dumps(NEXT_EXECUTION,indent=4))
+    print(json.dumps(next_execution,indent=4))
     SendPartialResult()
