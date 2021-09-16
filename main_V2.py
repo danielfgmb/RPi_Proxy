@@ -34,7 +34,7 @@ def GetExecution():
 def SendPartialResult():
     global next_execution
     print(next_execution)
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(NEXT_EXECUTION["execution_id"])
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(next_execution["execution_id"])
     todo = {"test":"ok"}
     response =  requests.post(api_url, json=todo)
     Result_id = response.json()
