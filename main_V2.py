@@ -9,12 +9,19 @@ FORMAT = 'utf-8'
 APPARATUS_ID = "2"
 EXPERIMENT_ID = "3"
 
-# CONFIG_OF_EXP = []
+CONFIG_OF_EXP = []
 MY_IP = "192.168.1.83"
 SEGREDO = "estou bem"
 SAVE_DATA = []
 
-api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/"+EXPERIMENT_ID+"/config"
-response =  requests.post(api_url)
-CONFIG_OF_EXP = response.json()
-print(json.dumps(CONFIG_OF_EXP,indent=4))
+
+def GetConfig():
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/"+EXPERIMENT_ID+"/config"
+    response =  requests.post(api_url)
+    CONFIG_OF_EXP = response.json()
+    print(json.dumps(CONFIG_OF_EXP,indent=4))
+    return ''
+
+
+if __name__ == "__main__":
+    GetConfig()
