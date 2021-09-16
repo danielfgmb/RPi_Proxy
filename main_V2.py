@@ -1,8 +1,5 @@
-import socket
+# import socket
 import json
-import importlib
-import threading
-import time
 import requests 
 
 interface = None
@@ -26,25 +23,25 @@ SAVE_DATA = []
 
 # ​/apparatus​/{apparatus_id}​/{experiment_id}​/config
 def GetConfigFile():
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus​/2/3/config"
+    api_url = "http://"+SERVER+":8000/api/v1/apparatus​/2/3/config"
     print(api_url)
     # todo = {"id_RP": MY_IP, "segredo": SEGREDO}
     response =  requests.post(api_url)
     CONFIG_OF_EXP = response.json()
     print(json.dumps(CONFIG_OF_EXP,indent=4))
 
-def GetExperiment():
-    api_url = "http://"+SERVER+":8001/getExperiment"
-    todo = {"name":"Monte_Carlo"}
-    response =  requests.post(api_url, json=todo)
-    print (response.json())
+# def GetExperiment():
+#     api_url = "http://"+SERVER+":8001/getExperiment"
+#     todo = {"name":"Monte_Carlo"}
+#     response =  requests.post(api_url, json=todo)
+#     print (response.json())
 
 
-def SendResult():
-    api_url = "http://"+SERVER+":8001/sendResult?name="+str(NAME)
-    todo = {"msg_id":"11","data":{"val:":"1","temp":"28"}}
-    response =  requests.post(api_url, json=todo)
-    print (response.json())
+# def SendResult():
+#     api_url = "http://"+SERVER+":8001/sendResult?name="+str(NAME)
+#     todo = {"msg_id":"11","data":{"val:":"1","temp":"28"}}
+#     response =  requests.post(api_url, json=todo)
+#     print (response.json())
 
 
 
