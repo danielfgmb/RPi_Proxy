@@ -38,7 +38,7 @@ def SendPartialResult():
     global next_execution
     print(next_execution)
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(next_execution["execution_id"])
-    todo = {"value":{"ok":"ola","ponto":"oco"},"time":213123,"result_type":"p"}
+    todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
     response =  requests.post(api_url, json=todo)
     Result_id = response.json()
     print(json.dumps(Result_id,indent=4))
