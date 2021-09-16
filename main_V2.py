@@ -22,6 +22,14 @@ def GetConfig():
     print(json.dumps(CONFIG_OF_EXP,indent=4))
     return ''
 
+def GetExecution():
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
+    response =  requests.get(api_url)
+    CONFIG_OF_EXP = response.json()
+    print(json.dumps(CONFIG_OF_EXP,indent=4))
+    return ''
+
 
 if __name__ == "__main__":
     GetConfig()
+    GetExecution()
