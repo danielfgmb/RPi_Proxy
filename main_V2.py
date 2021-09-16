@@ -43,4 +43,5 @@ def SendPartialResult():
 if __name__ == "__main__":
     GetConfig()
     GetExecution()
+    print(json.dumps(NEXT_EXECUTION,indent=4))
     SendPartialResult()
