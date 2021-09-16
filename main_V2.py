@@ -27,18 +27,19 @@ def GetExecution():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
     response =  requests.get(api_url)
     NEXT_EXECUTION = response.json()
-    print(json.dumps(CONFIG_OF_EXP,indent=4))
+    print(json.dumps(NEXT_EXECUTION,indent=4))
     return ''
 
 def SendPartialResult():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+NEXT_EXECUTION["execution_id"]
     todo = {"test":"ok"}
     response =  requests.post(api_url, json=todo)
-    CONFIG_OF_EXP = response.json()
-    print(json.dumps(CONFIG_OF_EXP,indent=4))
+    Result_id = response.json()
+    print(json.dumps(Result_id,indent=4))
     return ''
 
 
 if __name__ == "__main__":
     GetConfig()
     GetExecution()
+    SendPartialResult()
