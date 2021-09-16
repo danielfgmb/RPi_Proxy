@@ -1,5 +1,8 @@
 import requests
 import json
+from datetime import datetime
+
+
 
 SERVER = "194.210.159.33"
 
@@ -35,7 +38,7 @@ def SendPartialResult():
     global next_execution
     print(next_execution)
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(next_execution["execution_id"])
-    todo = {"value":{"ok":"ola","ponto":"oco"}}
+    todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now(),"result_type":"p"}
     response =  requests.post(api_url, json=todo)
     Result_id = response.json()
     print(json.dumps(Result_id,indent=4))
