@@ -3,22 +3,35 @@ import json
 import importlib
 import threading
 import time
-import requests
-import pprint
+import requests 
+
+interface = None
+
+
+PORT = "8000"
+FORMAT = 'utf-8'
 
 SERVER = "194.210.159.33"
+
+APPARATUS_ID = "2"
+EXPERIMENT_ID ="3"
+
 MY_IP = "192.168.1.83"
-NAME = "Monte_Carlo"
-SEGREDO = "estou bem"
-CONFIG_OF_EXP = []
 SEGREDO = "estou bem"
 
+CONFIG_OF_EXP = []
+SAVE_DATA = []
+
+
+
+# ​/apparatus​/{apparatus_id}​/{experiment_id}​/config
 def GetConfigFile():
-    api_url = "http://"+SERVER+":8001/getConfig"
-    todo = {"id_RP": MY_IP, "segredo": SEGREDO}
-    response =  requests.post(api_url, json=todo)
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus​/2/3/config"
+    print(api_url)
+    # todo = {"id_RP": MY_IP, "segredo": SEGREDO}
+    response =  requests.post(api_url)
     CONFIG_OF_EXP = response.json()
-    print(json.dumps(CONFIG_OF_EXP['config_file'],indent=4))
+    print(json.dumps(CONFIG_OF_EXP,indent=4))
 
 def GetExperiment():
     api_url = "http://"+SERVER+":8001/getExperiment"
@@ -36,7 +49,7 @@ def SendResult():
 
 
 if __name__ == "__main__":
-    SendResult()
+    GetConfigFile()
 
 
 # penso que isto devia ter um endpoint para o main server chamar quando for necessario 
