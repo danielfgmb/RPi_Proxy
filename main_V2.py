@@ -128,6 +128,7 @@ def main_cycle():
     global next_execution
     global status_config
     global Working
+    global Waiting_for_config
     if CONFIG_OF_EXP != None:
         if test :
             print("Esta a passar pelo if none este\n")
