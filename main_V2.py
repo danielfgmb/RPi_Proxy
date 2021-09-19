@@ -131,8 +131,9 @@ def main_cycle():
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
-            if "config_params" in next_execution and not Working  :
-                status_config=Send_Config_to_Pic(next_execution["config_params"])
+            if "config_params" in next_execution and not Working:
+                save_execution =next_execution["config_params"]
+                status_config=Send_Config_to_Pic(save_execution)
                 if test:
                     print("O valor do Working é: "+str(Working))
             # pass
