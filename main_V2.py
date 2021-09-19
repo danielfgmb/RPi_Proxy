@@ -129,21 +129,17 @@ def main_cycle():
     global next_execution
     global status_config
     global Working
-    global Waiting_for_config
     if CONFIG_OF_EXP != None:
         if test :
             print("Esta a passar pelo if none este\n")
         while True:
-            if not Working and Waiting_for_config:
+            if not Working:
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
                 print("\n\nIsto_1 :")
                 print (next_execution)
-                Waiting_for_config =False
             if ("config_params" in next_execution.keys()) and (not Working):
-                # print("\n\nIsto_1:")
-                
                 save_execution =next_execution.get("config_params",None)
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
