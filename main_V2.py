@@ -21,6 +21,8 @@ MY_IP = "192.168.1.83"
 SEGREDO = "estou bem"
 SAVE_DATA = []
 
+test =True
+
 interface = None
 
 
@@ -103,10 +105,15 @@ def SendPartialResult(msg):
 #     SendPartialResult()
 
 def main_cycle():
+    global CONFIG_OF_EXP
     global next_execution
     if CONFIG_OF_EXP != None:
+        if test :
+            print("Esta a passar pelo if none\n")
         while True:
             while next_execution["config_params"] != None:
+                if test :
+                    print("Esta a passar pelo if none\n")
                 GetExecution()
             status_config=Send_Config_to_Pic(next_execution["config_params"])
             next_execution = None
@@ -121,18 +128,18 @@ if __name__ == "__main__":
     # global next_execution
     connected = None
     interface = importlib.import_module("pic_interface.interface")
-    # while True:
-    try:
-        GetConfig()
-        if interface.do_init(CONFIG_OF_EXP) :
-            main_cycle()
-        else:
-            print ("Experiment not found")
-    except:
-        #LOG ERROR
-        print("Faill to connect to the Server. Trying again after 10 s")
-        #So faz shutdown do socket se este chegou a estar connected
-        time.sleep(10)
+    while True:
+        try:
+            GetConfig()
+            if interface.do_init(CONFIG_OF_EXP) :
+                main_cycle()
+            else:
+                print ("Experiment not found")
+        except:
+            #LOG ERROR
+            print("Faill to connect to the Server. Trying again after 10 s")
+            #So faz shutdown do socket se este chegou a estar connected
+            time.sleep(10)
 
 
 
