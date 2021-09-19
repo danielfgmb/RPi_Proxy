@@ -72,7 +72,6 @@ def Send_Config_to_Pic(myjson):
         if interface.do_start():                            #tentar começar experiencia
             print("aqui")
             Working = True
-            Waiting_for_config = True
             data_thread.start()
             time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
@@ -139,12 +138,13 @@ def main_cycle():
                 GetExecution()
                 print("\n\nIsto_1 :")
                 print (next_execution)
+            time.sleep(0.5)
             if ("config_params" in next_execution.keys()) and (not Working):
                 save_execution =next_execution.get("config_params",None)
-                if save_execution != None:
-                    status_config=Send_Config_to_Pic(save_execution)
-                    if test:
-                        print("O valor do Working é: "+str(Working))
+                # if save_execution != None:
+                status_config=Send_Config_to_Pic(save_execution)
+                if test:
+                    print("O valor do Working é: "+str(Working))
             # pass
             # print("teste 12")
             # print(Working)
