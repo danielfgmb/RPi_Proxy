@@ -33,19 +33,19 @@ def send_exp_data():
     global Working
     while interface.receive_data_from_exp() != "DATA_START":
         pass
-    send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":"","result_type":"p","status":"Experiment Starting"}
+    send_message = {"time":datetime.now().strftime('%Y-%m-%d%H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
         exp_data = interface.receive_data_from_exp()
         print(exp_data)
         if exp_data != "DATA_END":
             SAVE_DATA.append({"timestamp":"'+str(time.time_ns())+'","Data":exp_data})
-            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":exp_data,"result_type":"p","status":"running"}
+            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":exp_data,"result_type":"p","status":"running"}
             SendPartialResult(send_message)
         else:
-            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":"","result_type":"p","status":"Experiment Ended"}
+            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Ended"}
             SendPartialResult(send_message)
-            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":SAVE_DATA,"result_type":"f"}
+            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
             return 
