@@ -119,7 +119,7 @@ def main_cycle():
         if test :
             print("Esta a passar pelo if none este\n")
         while True:
-            while not Working:
+            if not Working:
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
