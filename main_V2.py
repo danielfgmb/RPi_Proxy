@@ -23,12 +23,14 @@ SEGREDO = "estou bem"
 SAVE_DATA = []
 
 test =True
+Working = False
 
 interface = None
 
 
 def send_exp_data():
     global SAVE_DATA
+    global Working
     while interface.receive_data_from_exp() != "DATA_START":
         pass
     send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":"","result_type":"p","status":"Experiment Starting"}
@@ -45,10 +47,12 @@ def send_exp_data():
             SendPartialResult(send_message)
             send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":str(SAVE_DATA).replace('\'', ''),"result_type":"f"}
             SendPartialResult(send_message)
+            Working = False
             return 
 
 
 def Send_Config_to_Pic(myjson):
+    global Working
     print("Recebi mensagem de configurestart. A tentar configurar pic")
     actual_config, config_feita_correcta = interface.do_config(myjson)
     if config_feita_correcta :   #se config feita igual a pedida? (opcional?)
@@ -60,6 +64,7 @@ def Send_Config_to_Pic(myjson):
             time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
             #send_mensage = '{"reply_id": "2","status":"Experiment Running","config_params":"'+str(myjson["config_params"])+'}'
+            Working = True
             send_mensage = {"reply_id": "2","status":"Experiment Running"}
         else :
             send_mensage = {"reply_id": "2", "error":"-1", "status":"Experiment could not start"}
@@ -109,18 +114,19 @@ def main_cycle():
     global CONFIG_OF_EXP
     global next_execution
     global status_config
+    global Working
     if CONFIG_OF_EXP != None:
         if test :
             print("Esta a passar pelo if none este\n")
         while True:
-            while next_execution == None:
+            while not Working:
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
-            if "config_params" in next_execution:
+            if "config_params" in next_execution and  not Working  :
                 status_config=Send_Config_to_Pic(next_execution["config_params"])
-                next_execution = None
             if "status" in status_config:
+                
                 if status_config ["status"] == "Experiment Running":
                     send_exp_data()
 
