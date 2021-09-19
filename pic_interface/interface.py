@@ -102,8 +102,8 @@ def do_config(config_json) :
     
 
     print(config_json)
-    size = config_json["config_params"]["R"]
-    n_points = config_json["config_params"]["Iteration"]
+    size = config_json["R"]
+    n_points = config_json["Iteration"]
 
     print("Size :")
     print(size)
