@@ -33,7 +33,7 @@ def send_exp_data():
     global Working
     while interface.receive_data_from_exp() != "DATA_START":
         pass
-    send_message = {"time":datetime.now().strftime('%Y-%m-%d%H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
+    send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
         exp_data = interface.receive_data_from_exp()
