@@ -32,6 +32,8 @@ def send_exp_data():
     global SAVE_DATA
     global Working
     global next_execution
+    print("ID:\n")
+    print(threading.get_ident())
     while interface.receive_data_from_exp() != "DATA_START":
         pass
     Working = True
