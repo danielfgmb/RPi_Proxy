@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 # SERVER = "194.210.159.33"
-SERVER = "10.2.8.14"
+SERVER = "10.2.24.6"
 
 PORT = "8000"
 FORMAT = 'utf-8'
