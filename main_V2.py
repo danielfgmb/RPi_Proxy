@@ -143,7 +143,7 @@ def main_cycle():
             if ("config_params" in next_execution.keys()) and not Working :
                 # print("\n\nIsto_1:")
                 # print (next_execution)
-                save_execution =next_execution["config_params"]
+                save_execution =next_execution.get("config_params",None)
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
                     print("O valor do Working é: "+str(Working))
