@@ -23,7 +23,7 @@ SEGREDO = "estou bem"
 SAVE_DATA = []
 
 test =False
-test_end_point_print = False
+test_end_point_print = True
 Working = False
 Waiting_for_config = True
 
