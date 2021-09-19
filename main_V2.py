@@ -120,8 +120,9 @@ def main_cycle():
             if "config_params" in next_execution:
                 status_config=Send_Config_to_Pic(next_execution["config_params"])
                 next_execution = None
-            if status_config ["status"] == "Experiment Running":
-                send_exp_data()
+            if "status" in status_config:
+                if status_config ["status"] == "Experiment Running":
+                    send_exp_data()
 
     return ''
 
