@@ -22,7 +22,8 @@ MY_IP = "192.168.1.83"
 SEGREDO = "estou bem"
 SAVE_DATA = []
 
-test =True
+test =False
+test_end_point_print = False
 Working = False
 Waiting_for_config = True
 
@@ -94,7 +95,8 @@ def GetConfig():
     msg = {"secret":SEGREDO}
     response =  requests.post(api_url, json = msg)
     CONFIG_OF_EXP = response.json()
-    print(json.dumps(CONFIG_OF_EXP,indent=4))
+    if (test_end_point_print):
+        print(json.dumps(CONFIG_OF_EXP,indent=4))
     return ''
 
 def GetExecution():
@@ -102,8 +104,9 @@ def GetExecution():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
     response =  requests.get(api_url)
     next_execution = response.json()
-    print("REQUEST\n")
-    print(json.dumps(next_execution,indent=4))
+    if (test_end_point_print):
+        print("REQUEST\n")
+        print(json.dumps(next_execution,indent=4))
     return ''
 
 def SendPartialResult(msg):
@@ -113,7 +116,8 @@ def SendPartialResult(msg):
     # todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
     response =  requests.post(api_url, json=msg)
     Result_id = response.json()
-    print(json.dumps(Result_id,indent=4))
+    if (test_end_point_print):
+        print(json.dumps(Result_id,indent=4))   
     return ''
 
 
@@ -136,12 +140,13 @@ def main_cycle():
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
-                print("\n\nIsto_1 :")
-                print (next_execution)
+                if test:
+                    print("\n\nIsto_1 :")
+                    print (next_execution)
             time.sleep(0.5)
             if ("config_params" in next_execution.keys()) and (not Working):
                 save_execution =next_execution.get("config_params",None)
-                # if save_execution != None:
+                # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq 
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
                     print("O valor do Working é: "+str(Working))
