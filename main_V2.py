@@ -140,6 +140,7 @@ def main_cycle():
                 print("\n\nIsto_1 :")
                 print (next_execution)
                 Waiting_for_config =False
+                print (("config_params" in next_execution.keys()) and not Working)
             if ("config_params" in next_execution.keys()) and not Working :
                 # print("\n\nIsto_1:")
                 print (("config_params" in next_execution.keys()))
