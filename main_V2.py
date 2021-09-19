@@ -123,8 +123,10 @@ def main_cycle():
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
-            if "config_params" in next_execution and  not Working  :
+            if "config_params" in next_execution and not Working  :
                 status_config=Send_Config_to_Pic(next_execution["config_params"])
+                if test:
+                    print("O valor do Working é: "+str(Working))
             if "status" in status_config:
                 
                 if status_config ["status"] == "Experiment Running":
