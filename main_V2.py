@@ -31,6 +31,7 @@ interface = None
 def send_exp_data():
     global SAVE_DATA
     global Working
+    global next_execution
     while interface.receive_data_from_exp() != "DATA_START":
         pass
     Working = True
@@ -49,6 +50,7 @@ def send_exp_data():
             send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
+            next_execution = {}
             return 
 
 
