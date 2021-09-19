@@ -55,7 +55,7 @@ def send_exp_data():
             send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
-            next_execution = {}
+            # next_execution = {}
             return 
 
 
@@ -69,7 +69,7 @@ def Send_Config_to_Pic(myjson):
         if interface.do_start():                            #tentar começar experiencia
             print("aqui")
             data_thread.start()
-            # time.sleep(0.000001)
+            time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
             #send_mensage = '{"reply_id": "2","status":"Experiment Running","config_params":"'+str(myjson["config_params"])+'}'
             # Working = True
@@ -98,6 +98,7 @@ def GetExecution():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
     response =  requests.get(api_url)
     next_execution = response.json()
+    print("REQUEST:\n")
     print(json.dumps(next_execution,indent=4))
     return ''
 
@@ -131,8 +132,8 @@ def main_cycle():
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
-                # print("\n\nIsto_1 :")
-                # print (next_execution)
+                print("\n\nIsto_1 :")
+                print (next_execution)
             if ("config_params" in next_execution) and not Working:
                 # print("\n\nIsto_1:")
                 # print (next_execution)
