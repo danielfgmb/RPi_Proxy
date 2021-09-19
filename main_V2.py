@@ -24,6 +24,7 @@ SAVE_DATA = []
 
 test =True
 Working = False
+Waiting_for_config = True
 
 interface = None
 
@@ -55,12 +56,13 @@ def send_exp_data():
             send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
-            # next_execution = {}
+            next_execution = {}
             return 
 
 
 def Send_Config_to_Pic(myjson):
     global Working
+    global Waiting_for_config
     print("Recebi mensagem de configurestart. A tentar configurar pic")
     actual_config, config_feita_correcta = interface.do_config(myjson)
     if config_feita_correcta :   #se config feita igual a pedida? (opcional?)
@@ -69,6 +71,7 @@ def Send_Config_to_Pic(myjson):
         if interface.do_start():                            #tentar começar experiencia
             print("aqui")
             Working = True
+            Waiting_for_config = True
             data_thread.start()
             time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
@@ -129,13 +132,14 @@ def main_cycle():
         if test :
             print("Esta a passar pelo if none este\n")
         while True:
-            if not Working:
+            if not Working and Waiting_for_config:
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
                 print("\n\nIsto_1 :")
                 print (next_execution)
-            if ("config_params" in next_execution) and not Working:
+                Waiting_for_config =False
+            if ("config_params" in next_execution) and not Working :
                 # print("\n\nIsto_1:")
                 # print (next_execution)
                 save_execution =next_execution["config_params"]
