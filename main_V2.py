@@ -22,7 +22,7 @@ SAVE_DATA = []
 
 def GetConfig():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/"+EXPERIMENT_ID+"/config"
-    msg = {"secrt":SEGREDO}
+    msg = {"secret":SEGREDO}
     response =  requests.post(api_url, json = msg)
     CONFIG_OF_EXP = response.json()
     print(json.dumps(CONFIG_OF_EXP,indent=4))
