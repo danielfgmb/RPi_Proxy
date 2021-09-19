@@ -67,7 +67,7 @@ def Send_Config_to_Pic(myjson):
             time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
             #send_mensage = '{"reply_id": "2","status":"Experiment Running","config_params":"'+str(myjson["config_params"])+'}'
-            Working = True
+            # Working = True
             send_mensage = {"reply_id": "2","status":"Experiment Running"}
         else :
             send_mensage = {"reply_id": "2", "error":"-1", "status":"Experiment could not start"}
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     print("[Starting] Experiment Server Starting...")
     # global next_execution
     connected = None
-    interface = importlib.import_module("pic_interface.interface")
+    interface = importlib.import_module("p  ic_interface.interface")
     while True:
         # try:
         GetConfig()
