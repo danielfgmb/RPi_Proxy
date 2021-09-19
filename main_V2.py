@@ -109,7 +109,7 @@ def main_cycle():
     global next_execution
     if CONFIG_OF_EXP != None:
         if test :
-            print("Esta a passar pelo if none\n")
+            print("Esta a passar pelo if none este\n")
         while True:
             while next_execution["config_params"] != None:
                 if test :
