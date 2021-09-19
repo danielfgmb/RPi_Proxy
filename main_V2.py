@@ -111,7 +111,7 @@ def main_cycle():
         if test :
             print("Esta a passar pelo if none este\n")
         while True:
-            while next_execution["config_params"] != None:
+            while next_execution["config_params"] == None:
                 if test :
                     print("Esta a passar pelo if none\n")
                 GetExecution()
