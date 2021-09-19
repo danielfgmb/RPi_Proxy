@@ -40,7 +40,12 @@ def send_exp_data():
     while True:
         exp_data = interface.receive_data_from_exp()
         print(exp_data)
+        try:
+            exp_data = json.loads(exp_data)
+        except:
+            pass
         if exp_data != "DATA_END":
+            
             SAVE_DATA.append({"timestamp":"'+str(time.time_ns())+'","Data":exp_data})
             send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":exp_data,"result_type":"p","status":"running"}
             SendPartialResult(send_message)
