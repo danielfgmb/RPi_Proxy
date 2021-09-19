@@ -32,6 +32,7 @@ def send_exp_data():
     global SAVE_DATA
     global Working
     global next_execution
+    global lock
     while interface.receive_data_from_exp() != "DATA_START":
         pass
     lock.acquire()
