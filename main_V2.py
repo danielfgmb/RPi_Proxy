@@ -32,7 +32,7 @@ def send_exp_data():
     global SAVE_DATA
     global Working
     global next_execution
-    print("ID:\n")
+    print("_______________")
     print(threading.get_ident())
     while interface.receive_data_from_exp() != "DATA_START":
         pass
@@ -100,7 +100,7 @@ def GetExecution():
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
     response =  requests.get(api_url)
     next_execution = response.json()
-    print("REQUEST:\n")
+    print("REQUEST\n")
     print(json.dumps(next_execution,indent=4))
     return ''
 
