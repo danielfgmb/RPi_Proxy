@@ -35,9 +35,6 @@ def send_exp_data():
     global lock
     while interface.receive_data_from_exp() != "DATA_START":
         pass
-    lock.acquire()
-    Working = True
-    lock.release()
     send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
@@ -71,6 +68,7 @@ def Send_Config_to_Pic(myjson):
         print("PIC configurado.\n")
         if interface.do_start():                            #tentar começar experiencia
             print("aqui")
+            Working = True
             data_thread.start()
             time.sleep(0.000001)
             #O JSON dos config parameters está mal e crasha o server. ARRANJAR
