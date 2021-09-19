@@ -17,6 +17,7 @@ EXPERIMENT_ID = "3"
 
 CONFIG_OF_EXP = []
 next_execution = {}
+status_config= {}
 MY_IP = "192.168.1.83"
 SEGREDO = "estou bem"
 SAVE_DATA = []
@@ -107,6 +108,7 @@ def SendPartialResult(msg):
 def main_cycle():
     global CONFIG_OF_EXP
     global next_execution
+    global status_config
     if CONFIG_OF_EXP != None:
         if test :
             print("Esta a passar pelo if none este\n")
