@@ -133,7 +133,7 @@ def main_cycle():
                 GetExecution()
                 # print("\n\nIsto_1 :")
                 # print (next_execution)
-            if "config_params" in next_execution and not Working:
+            if ("config_params" in next_execution) and not Working:
                 print("\n\nIsto_1:")
                 print (next_execution)
                 save_execution =next_execution["config_params"]
