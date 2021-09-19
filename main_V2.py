@@ -39,13 +39,13 @@ def send_exp_data():
         exp_data = interface.receive_data_from_exp()
         print(exp_data)
         if exp_data != "DATA_END":
-            SAVE_DATA.append('{"timestamp":"'+str(time.time_ns())+'","Data":'+str(exp_data)+'}')
-            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":str(exp_data),"result_type":"p","status":"running"}
+            SAVE_DATA.append({"timestamp":"'+str(time.time_ns())+'","Data":exp_data})
+            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":exp_data,"result_type":"p","status":"running"}
             SendPartialResult(send_message)
         else:
             send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":"","result_type":"p","status":"Experiment Ended"}
             SendPartialResult(send_message)
-            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":str(SAVE_DATA).replace('\'', ''),"result_type":"f"}
+            send_message = {"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
             return 
