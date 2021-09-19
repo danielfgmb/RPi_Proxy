@@ -69,6 +69,7 @@ def Send_Config_to_Pic(myjson):
 
 # REST
 def GetConfig():
+    global CONFIG_OF_EXP
     api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/"+EXPERIMENT_ID+"/config"
     msg = {"secret":SEGREDO}
     response =  requests.post(api_url, json = msg)
