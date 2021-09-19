@@ -4,7 +4,7 @@ from datetime import datetime
 import importlib
 import threading
 import time
-
+lock = threading.Lock()
 
 # SERVER = "194.210.159.33"
 SERVER = "10.2.24.10"
@@ -32,11 +32,11 @@ def send_exp_data():
     global SAVE_DATA
     global Working
     global next_execution
-    print("_______________")
-    print(threading.get_ident())
     while interface.receive_data_from_exp() != "DATA_START":
         pass
+    lock.acquire()
     Working = True
+    lock.release()
     send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
