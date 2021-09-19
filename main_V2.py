@@ -127,12 +127,12 @@ def main_cycle():
             if "config_params" in next_execution and not Working  :
                 status_config=Send_Config_to_Pic(next_execution["config_params"])
                 if test:
-                    print("O valor do Working é: "+str(Working))
-            print("teste 12")
-            print(Working)
+                    print("O valor do Working é: "+str(Working))´
+            # pass
+            # print("teste 12")
+            # print(Working)
 
     return ''
-
 
 if __name__ == "__main__":
     print("[Starting] Experiment Server Starting...")
