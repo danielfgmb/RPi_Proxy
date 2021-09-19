@@ -46,7 +46,7 @@ def send_exp_data():
             pass
         if exp_data != "DATA_END":
             
-            SAVE_DATA.append({"timestamp":"'+str(time.time_ns())+'","Data":exp_data})
+            SAVE_DATA.append(exp_data)
             send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":exp_data,"result_type":"p","status":"running"}
             SendPartialResult(send_message)
         else:
