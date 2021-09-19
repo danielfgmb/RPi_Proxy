@@ -33,6 +33,7 @@ def send_exp_data():
     global Working
     while interface.receive_data_from_exp() != "DATA_START":
         pass
+    Working = True
     send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
@@ -127,6 +128,8 @@ def main_cycle():
                 status_config=Send_Config_to_Pic(next_execution["config_params"])
                 if test:
                     print("O valor do Working é: "+str(Working))
+            print("teste 12")
+            print(Working)
 
     return ''
 
