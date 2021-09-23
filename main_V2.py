@@ -6,8 +6,8 @@ import threading
 import time
 lock = threading.Lock()
 
-# SERVER = "194.210.159.33"
-SERVER = "10.2.24.10"
+SERVER = "194.210.159.33"
+# SERVER = "10.2.0.6"
 
 PORT = "8000"
 FORMAT = 'utf-8'

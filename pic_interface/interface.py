@@ -38,9 +38,9 @@ def receive_data_from_exp():
         print("Pi: %lf"%(float(total_in)*4/float(n_points)))
         return "DATA_END"
     sleep(0.01)
-    
-    x = random.random()*float(size)
-    y = random.random()*float(size)
+    # randrange
+    x = random.randrange(-1,1)*float(size)
+    y = random.randrange(-1,1)*float(size)
     if math.sqrt(x*x+y*y) <=int(size):
         c_in = 1
         total_in = total_in + 1
