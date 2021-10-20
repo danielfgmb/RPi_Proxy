@@ -39,8 +39,8 @@ def receive_data_from_exp():
         return "DATA_END"
     sleep(0.01)
     # randrange
-    x = random.randrange(-1,1)*float(size)
-    y = random.randrange(-1,1)*float(size)
+    x = random.uniform(-1.0,1.0)*float(size)
+    y = random.uniform(-1.0,1.0)*float(size)
     if math.sqrt(x*x+y*y) <=int(size):
         c_in = 1
         total_in = total_in + 1

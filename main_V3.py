@@ -6,13 +6,13 @@ import threading
 import time
 lock = threading.Lock()
 
-SERVER = "194.210.159.33"
+SERVER = "192.168.1.6"
 # SERVER = "10.2.0.6"
 
 PORT = "8000"
 FORMAT = 'utf-8'
 
-APPARATUS_ID = "2"
+APPARATUS_ID = "3"
 EXPERIMENT_ID = "3"
 
 CONFIG_OF_EXP = []
@@ -37,7 +37,7 @@ def send_exp_data():
     global lock
     while interface.receive_data_from_exp() != "DATA_START":
         pass
-    send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Starting"}
+    send_message = {"value":"","result_type":"p","status":"Experiment Starting"}
     SendPartialResult(send_message)
     while True:
         exp_data = interface.receive_data_from_exp()
@@ -49,12 +49,12 @@ def send_exp_data():
         if exp_data != "DATA_END":
             
             SAVE_DATA.append(exp_data)
-            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":exp_data,"result_type":"p","status":"running"}
+            send_message = {"value":exp_data,"result_type":"p","status":"running"}
             SendPartialResult(send_message)
         else:
-            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":"","result_type":"p","status":"Experiment Ended"}
+            send_message = {"value":"","result_type":"p","status":"Experiment Ended"}
             SendPartialResult(send_message)
-            send_message = {"time":datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"value":SAVE_DATA,"result_type":"f"}
+            send_message = {"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
             next_execution = {}
@@ -91,10 +91,10 @@ def Send_Config_to_Pic(myjson):
 # REST
 def GetConfig():
     global CONFIG_OF_EXP
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/"+EXPERIMENT_ID+"/config"
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/config"
     msg = {"secret":SEGREDO}
-    response =  requests.post(api_url, json = msg)
-    CONFIG_OF_EXP = response.json()
+    response =  requests.get(api_url, headers ={"Authentication":"Secret estou bem"})
+    CONFIG_OF_EXP = response.json()[0]
     if (test_end_point_print):
         print(json.dumps(CONFIG_OF_EXP,indent=4))
     return ''
@@ -111,14 +111,39 @@ def GetExecution():
 
 def SendPartialResult(msg):
     global next_execution
-    print(next_execution)
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendpartialresult/"+str(next_execution["execution_id"])
+    # print(next_execution)
+    print(str(msg))
+
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendresult/"+str(next_execution["id"])
+    print(api_url)
     # todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
-    response =  requests.post(api_url, json=msg)
-    Result_id = response.json()
-    if (test_end_point_print):
-        print(json.dumps(Result_id,indent=4))   
+    requests.post(api_url, json=msg)
+    # Result_id = response.json()
+    # if (test_end_point_print):
+    #     print(json.dumps(Result_id,indent=4))   
     return ''
+
+
+
+"""
+This one is not working error 403 and 400 I think is the Authentication
+"""
+
+# def SendPartialResult(msg):
+#     global next_execution
+#     # print(next_execution)
+#     print(str(msg))
+
+#     api_url = "http://"+SERVER+":"+PORT+"/api/v1/result"
+#     print(api_url)
+#     msg["execution"] = next_execution["id"]
+#     # todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
+#     requests.post(api_url, json=msg, headers ={"Authentication":"Secret estou bem"})
+#     # Result_id = response.json()
+#     # if (test_end_point_print):
+#     #     print(json.dumps(Result_id,indent=4))   
+#     return ''
+
 
 
 # if __name__ == "__main__":
@@ -144,8 +169,8 @@ def main_cycle():
                     print("\n\nIsto_1 :")
                     print (next_execution)
             time.sleep(0.5)
-            if ("config_params" in next_execution.keys()) and (not Working):
-                save_execution =next_execution.get("config_params",None)
+            if ("config" in next_execution.keys()) and (not Working):
+                save_execution =next_execution.get("config",None)
                 # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq 
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
@@ -164,7 +189,8 @@ if __name__ == "__main__":
     while True:
         # try:
         GetConfig()
-        if interface.do_init(CONFIG_OF_EXP) :
+        
+        if interface.do_init(CONFIG_OF_EXP["config"]) :
             main_cycle()
         else:
             print ("Experiment not found")
