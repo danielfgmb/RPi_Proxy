@@ -6,7 +6,7 @@ import threading
 import time
 lock = threading.Lock()
 
-SERVER = "192.168.1.6"
+SERVER = "194.210.159.110"
 # SERVER = "10.2.0.6"
 
 PORT = "8000"
@@ -29,6 +29,10 @@ Waiting_for_config = True
 
 interface = None
 
+HEADERS = { 
+  "Authentication": "Secret estou bem", 
+  "Content-Type": "application/json"
+}
 
 def send_exp_data():
     global SAVE_DATA
@@ -37,8 +41,8 @@ def send_exp_data():
     global lock
     while interface.receive_data_from_exp() != "DATA_START":
         pass
-    send_message = {"value":"","result_type":"p","status":"Experiment Starting"}
-    SendPartialResult(send_message)
+    # send_message = {"value":"","result_type":"p"}#,"status":"Experiment Starting"}
+    # SendPartialResult(send_message)
     while True:
         exp_data = interface.receive_data_from_exp()
         print(exp_data)
@@ -49,12 +53,10 @@ def send_exp_data():
         if exp_data != "DATA_END":
             
             SAVE_DATA.append(exp_data)
-            send_message = {"value":exp_data,"result_type":"p","status":"running"}
+            send_message = {"execution":int(next_execution["execution_id"]),"value":exp_data,"result_type":"p"}#,"status":"running"}
             SendPartialResult(send_message)
         else:
-            send_message = {"value":"","result_type":"p","status":"Experiment Ended"}
-            SendPartialResult(send_message)
-            send_message = {"value":SAVE_DATA,"result_type":"f"}
+            send_message = {"execution":int(next_execution["execution_id"]),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
             next_execution = {}
@@ -91,10 +93,10 @@ def Send_Config_to_Pic(myjson):
 # REST
 def GetConfig():
     global CONFIG_OF_EXP
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/config"
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID
     msg = {"secret":SEGREDO}
     response =  requests.get(api_url, headers ={"Authentication":"Secret estou bem"})
-    CONFIG_OF_EXP = response.json()[0]
+    CONFIG_OF_EXP = response.json()["experiment"]
     if (test_end_point_print):
         print(json.dumps(CONFIG_OF_EXP,indent=4))
     return ''
@@ -114,10 +116,11 @@ def SendPartialResult(msg):
     # print(next_execution)
     print(str(msg))
 
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/sendresult/"+str(next_execution["id"])
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/result"
     print(api_url)
     # todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
-    requests.post(api_url, json=msg)
+    print("Aqui:  " ,json.dumps(msg,indent=4))
+    requests.post(api_url, headers = HEADERS, json=msg)
     # Result_id = response.json()
     # if (test_end_point_print):
     #     print(json.dumps(Result_id,indent=4))   
@@ -169,8 +172,8 @@ def main_cycle():
                     print("\n\nIsto_1 :")
                     print (next_execution)
             time.sleep(0.5)
-            if ("config" in next_execution.keys()) and (not Working):
-                save_execution =next_execution.get("config",None)
+            if ("config_params" in next_execution.keys()) and (not Working):
+                save_execution =next_execution.get("config_params",None)
                 # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq 
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
