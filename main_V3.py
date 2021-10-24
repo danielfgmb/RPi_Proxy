@@ -6,7 +6,7 @@ import threading
 import time
 lock = threading.Lock()
 
-SERVER = "194.210.159.110"
+SERVER = "10.2.0.14"
 # SERVER = "10.2.0.6"
 
 PORT = "8000"
@@ -53,10 +53,10 @@ def send_exp_data():
         if exp_data != "DATA_END":
             
             SAVE_DATA.append(exp_data)
-            send_message = {"execution":int(next_execution["execution_id"]),"value":exp_data,"result_type":"p"}#,"status":"running"}
+            send_message = {"execution":int(next_execution["id"]),"value":exp_data,"result_type":"p"}#,"status":"running"}
             SendPartialResult(send_message)
         else:
-            send_message = {"execution":int(next_execution["execution_id"]),"value":SAVE_DATA,"result_type":"f"}
+            send_message = {"execution":int(next_execution["id"]),"value":SAVE_DATA,"result_type":"f"}
             SendPartialResult(send_message)
             Working = False
             next_execution = {}
@@ -103,8 +103,8 @@ def GetConfig():
 
 def GetExecution():
     global next_execution
-    api_url = "http://"+SERVER+":"+PORT+"/api/v1/getexecution/"+APPARATUS_ID
-    response =  requests.get(api_url)
+    api_url = "http://"+SERVER+":"+PORT+"/api/v1/apparatus/"+APPARATUS_ID+"/nextexecution"
+    response =  requests.get(api_url,headers = HEADERS)
     next_execution = response.json()
     if (test_end_point_print):
         print("REQUEST\n")
@@ -172,8 +172,8 @@ def main_cycle():
                     print("\n\nIsto_1 :")
                     print (next_execution)
             time.sleep(0.5)
-            if ("config_params" in next_execution.keys()) and (not Working):
-                save_execution =next_execution.get("config_params",None)
+            if ("config" in next_execution.keys()) and (not Working) and next_execution["config"]!=None:
+                save_execution =next_execution.get("config",None)
                 # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq 
                 status_config=Send_Config_to_Pic(save_execution)
                 if test:
