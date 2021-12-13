@@ -266,11 +266,38 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         set_sga(sererial_Spec)
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
-        #evalute_data_Final(data, strat, stop, step, itera)
-        print("send data: " +"{:.3f}".format(PPT200.get_pressure(serial_pressure)) + data )
+        spec= evalute_data_Final(data)
+        print("send data: " +"{:.3f}".format(PPT200.get_pressure(serial_pressure)) + spec )
     return
     
 #data_final = arnist('COM3',3308000000, 3891000000, 500000, 4)
+
+def evalute_data_Final(data):
+    spec =[]
+    index = len(data)-1
+    print(index)
+    while (index>1):
+        print(data[index])
+        if (data[index] == 255):
+            index -=1
+            break
+        index-=1
+    print(index)
+    for i in range(0,index,2):
+        #______________Versão de testes_________________________
+        #val_1 = ((data_f[i] & 0b0111)<<8)
+        #val_2 = (data_f[i+1] & 0x0FF)
+        #print("val_1 ") 
+        #print(val_1)
+        #print("val_2 ")
+        #print(val_2)
+        #val_f = val_1 |val_2
+        #_______________________________________________________.
+        val = ((data[i] & 0b0111)<<8) | (data[i+1] & 0x0FF)
+        print((80*10.0-val)/10.0 ) # At 25dB to -25dB
+        spec.push((80*10.0-val)/10.0)
+    return spec
+    
 
 
 
