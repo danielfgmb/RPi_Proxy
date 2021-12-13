@@ -267,7 +267,8 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
         spec= evalute_data_Final(data)
-        print("send data: " +"{:.3f}".format(PPT200.get_pressure(serial_pressure)) + ' '.join(map(str,spec)) )
+        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "magnitude": ' '.join(map(str,spec))  }
+        print(json.dumps(send_message, indent=4))
     return
     
 #data_final = arnist('COM3',3308000000, 3891000000, 500000, 4)
