@@ -307,6 +307,7 @@ def Set_Up_Exp(gas_select,gas_amount):
     Vacum_Pump_stat(ON)
     time.sleep(5)
     Valve_cut_off_stat(ON)
+    time.sleep(50)
     # wait untly pressure is less them press_back
     Valve_cut_off_stat(OFF)
     Inject_Gas(gas_select, gas_amount)
@@ -331,7 +332,7 @@ if __name__ == "__main__":
     data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(1,15)
-    Do_analise_Spec('/dev/ttyACM0', 3308000000, 3391000000, 500000, 3)
+    Do_analise_Spec('/dev/ttyACM0', 3008000000, 3391000000, 500000, 3)
 
 
 
