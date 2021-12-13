@@ -30,27 +30,27 @@ def Int_GPIO():
     return
 
 def Discharge_stat(ON_OFF):
-    if int(ON_OFF) == 0:
+    if int(ON_OFF) == 1:
         GPIO.output(Discharge, GPIO.LOW)
-    elif int(ON_OFF) == 1:
+    elif int(ON_OFF) == 0:
         GPIO.output(Discharge, GPIO.HIGH)
     else:
         print("ERROR on the Discharge")
     return
 
 def Vacum_Pump_stat(ON_OFF):
-    if int(ON_OFF) == 0:
+    if int(ON_OFF) == 1:
         GPIO.output(Vacum_Pump, GPIO.LOW)
-    elif int(ON_OFF) == 1:
+    elif int(ON_OFF) == 0:
         GPIO.output(Vacum_Pump, GPIO.HIGH)
     else:
         print("ERROR on the Discharge")
     return
 
 def Valve_cut_off_stat(ON_OFF):
-    if int(ON_OFF) == 0:
+    if int(ON_OFF) == 1:
         GPIO.output(Valve_cut_off, GPIO.LOW)
-    elif int(ON_OFF) == 1:
+    elif int(ON_OFF) == 0:
         GPIO.output(Valve_cut_off, GPIO.HIGH)
     else:
         print("ERROR on the Discharge")
@@ -83,6 +83,6 @@ if __name__ == "__main__":
     Vacum_Pump_stat(OFF)
     time.sleep(2)
     
-    Inject_Gas(Helio, 500)
-    Inject_Gas(Argon, 500)
-    Inject_Gas(Xenon, 500)
+    Inject_Gas(1, 500)
+    Inject_Gas(2, 500)
+    Inject_Gas(3, 500)
