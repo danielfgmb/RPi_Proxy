@@ -310,6 +310,7 @@ def Set_Up_Exp(gas_select,gas_amount):
     return
 if __name__ == "__main__":
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
+    Int_GPIO()
     # Set Up experiment:
     Set_Up_Exp(1,15)
     Do_analise_Spec('/dev/ttyACM0', 3308000000, 3391000000, 500000, 3)
