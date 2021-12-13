@@ -8,6 +8,8 @@ import json
 import pandas as pd
 import configparser
 
+import threading
+
 from datetime import datetime
 
 
@@ -21,6 +23,7 @@ GPIO.setwarnings(False)
 ON = 1
 OFF = 0
 
+serial_pressure = None
 Valve_cut_off = 13
 Vacum_Pump=12
 Discharge=5
@@ -259,8 +262,8 @@ def arnist(COM,strat, stop, step, itera):
 
 
 def Do_analise_Spec(COM,strat, stop, step, itera):
+    global serial_pressure
     sererial_Spec = int_com(COM)
-    serial_pressure = PPT200.int_com_PPT200('/dev/ttyUSB0')
     for l in range(0,itera):
         act_generator(sererial_Spec)
         set_sga(sererial_Spec)
@@ -308,9 +311,24 @@ def Set_Up_Exp(gas_select,gas_amount):
     Valve_cut_off_stat(OFF)
     Inject_Gas(gas_select, gas_amount)
     return
+
+
+def Mauser_pressure():
+    global serial_pressure
+    while True:
+        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure))}
+        print(json.dumps(send_message, indent=4))
+        time.sleep(0.5)
+    return
+
+
+
 if __name__ == "__main__":
+    data_thread = threading.Thread(target=Mauser_pressure,daemon=True)
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
     Int_GPIO()
+    serial_pressure = PPT200.int_com_PPT200('/dev/ttyUSB0')
+    data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(1,15)
     Do_analise_Spec('/dev/ttyACM0', 3308000000, 3391000000, 500000, 3)
