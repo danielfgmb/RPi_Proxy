@@ -8,7 +8,7 @@ import configparser
 from datetime import datetime
 
 
-sys.path.append('/home/pi/Cavidade/elab/webgpio/modules')
+# sys.path.append('/home/pi/Cavidade/elab/webgpio/modules')
 import PPT200 as PPT200
 
 
@@ -187,3 +187,5 @@ def arnist(COM,strat, stop, step, itera):
 
 
 
+if __name__ == "__main__":
+    arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
