@@ -283,23 +283,23 @@ if __name__ == "__main__":
 
 
 
-if __name__ == "__main__":
-    print("Teste functions: ")
-    Int_GPIO()
-    Discharge_stat(ON)
-    time.sleep(2)
-    Discharge_stat(OFF)
-    time.sleep(3)
-    Vacum_Pump_stat(ON)
-    time.sleep(1)
-    Vacum_Pump_stat(OFF)
-    time.sleep(2)
-    Valve_cut_off_stat(ON)
-    time.sleep(0.1)
-    Valve_cut_off_stat(OFF)
+# if __name__ == "__main__":
+#     print("Teste functions: ")
+#     Int_GPIO()
+#     Discharge_stat(ON)
+#     time.sleep(2)
+#     Discharge_stat(OFF)
+#     time.sleep(3)
+#     Vacum_Pump_stat(ON)
+#     time.sleep(1)
+#     Vacum_Pump_stat(OFF)
+#     time.sleep(2)
+#     Valve_cut_off_stat(ON)
+#     time.sleep(0.1)
+#     Valve_cut_off_stat(OFF)
     
     
     
-    Inject_Gas(1, 6)
-    Inject_Gas(2, 5)
-    Inject_Gas(3, 1000)
+#     Inject_Gas(1, 6)
+#     Inject_Gas(2, 5)
+#     Inject_Gas(3, 1000)
