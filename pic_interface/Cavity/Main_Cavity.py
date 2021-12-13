@@ -82,7 +82,12 @@ if __name__ == "__main__":
     time.sleep(1)
     Vacum_Pump_stat(OFF)
     time.sleep(2)
+    Valve_cut_off_stat(ON)
+    time.sleep(10)
+    Valve_cut_off_stat(OFF)
     
-    Inject_Gas(1, 500)
-    Inject_Gas(2, 500)
-    Inject_Gas(3, 500)
+    
+    
+    Inject_Gas(1, 1000)
+    Inject_Gas(2, 5)
+    Inject_Gas(3, 1000)
