@@ -88,6 +88,6 @@ if __name__ == "__main__":
     
     
     
-    Inject_Gas(1, 1000)
+    Inject_Gas(1, 5)
     Inject_Gas(2, 5)
     Inject_Gas(3, 1000)
