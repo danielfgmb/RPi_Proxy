@@ -267,7 +267,7 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
         spec= evalute_data_Final(data)
-        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "magnitude": ' '.join(map(str,spec))  }
+        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "magnitude": spec  }
         print(json.dumps(send_message, indent=4))
     return
     
