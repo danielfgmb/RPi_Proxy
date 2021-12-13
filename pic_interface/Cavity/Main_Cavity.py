@@ -295,7 +295,7 @@ def evalute_data_Final(data):
         #_______________________________________________________.
         val = ((data[i] & 0b0111)<<8) | (data[i+1] & 0x0FF)
         print((80*10.0-val)/10.0 ) # At 25dB to -25dB
-        spec.push((80*10.0-val)/10.0)
+        spec.append((80*10.0-val)/10.0)
     return spec
     
 
