@@ -271,11 +271,11 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
         spec= evalute_data_Final(data)
-        print(len(spec))
+        print(len(spec[1:]))
         print(len(freq))
         print(freq[0])
         print(freq[-1])
-        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "frequency": freq.tolist(), "magnitude": spec  }
+        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
     return
     
