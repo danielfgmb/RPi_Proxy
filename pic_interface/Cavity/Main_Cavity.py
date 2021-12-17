@@ -23,6 +23,7 @@ GPIO.setwarnings(False)
 ON = 1
 OFF = 0
 
+pressure = 0
 serial_pressure = None
 Valve_cut_off = 13
 Vacum_Pump=12
@@ -275,7 +276,7 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         print(len(freq))
         print(freq[0])
         print(freq[-1])
-        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "frequency": freq.tolist(), "magnitude": spec[1:]  }
+        send_message = {"pressure": "{:.3f}".format(pressure), "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
     return
     
@@ -321,8 +322,10 @@ def Set_Up_Exp(gas_select,gas_amount):
 
 def Mauser_pressure():
     global serial_pressure
+    global pressure
     while True:
-        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure))}
+        pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
+        send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
         time.sleep(0.5)
     return
