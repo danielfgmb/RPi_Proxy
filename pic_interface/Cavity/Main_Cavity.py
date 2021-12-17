@@ -264,6 +264,7 @@ def arnist(COM,strat, stop, step, itera):
 
 def Do_analise_Spec(COM,strat, stop, step, itera):
     global serial_pressure
+    global pressure
     sererial_Spec = int_com(COM)
     freq = np.arange(strat, stop, step)
     for l in range(0,itera):
