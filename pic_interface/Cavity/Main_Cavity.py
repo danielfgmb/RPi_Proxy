@@ -338,6 +338,7 @@ if __name__ == "__main__":
     # Set Up experiment:
     Set_Up_Exp(1,15)
     Do_analise_Spec('/dev/ttyACM0', 3008000000, 3391000000, 500000, 3)
+    time.sleep(10)
 
 
 
