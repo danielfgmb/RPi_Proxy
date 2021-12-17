@@ -140,8 +140,8 @@ def get_data(ser):
         #print(line7)
         if (line7 ==b'complete\r\n'):
                 break
-    print('\n\r Final data: \n\r')
-    print(data_get)
+    # print('\n\r Final data: \n\r')
+    # print(data_get)
     
     
     return data_get
@@ -273,10 +273,10 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
         spec= evalute_data_Final(data)
-        print(len(spec[1:]))
-        print(len(freq))
-        print(freq[0])
-        print(freq[-1])
+        # print(len(spec[1:]))
+        # print(len(freq))
+        # print(freq[0])
+        # print(freq[-1])
         send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
     return
@@ -286,14 +286,14 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
 def evalute_data_Final(data):
     spec =[]
     index = len(data)-1
-    print(index)
+    # print(index)
     while (index>1):
         print(data[index])
         if (data[index] == 255):
             index -=1
             break
         index-=1
-    print(index)
+    # print(index)
     for i in range(0,index,2):
         #______________Versão de testes_________________________
         #val_1 = ((data_f[i] & 0b0111)<<8)
@@ -305,7 +305,7 @@ def evalute_data_Final(data):
         #val_f = val_1 |val_2
         #_______________________________________________________.
         val = ((data[i] & 0b0111)<<8) | (data[i+1] & 0x0FF)
-        print((80*10.0-val)/10.0 ) # At 25dB to -25dB
+        # print((80*10.0-val)/10.0 ) # At 25dB to -25dB
         spec.append((80*10.0-val)/10.0)
     return spec
     
