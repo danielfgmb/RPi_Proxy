@@ -276,7 +276,7 @@ def Do_analise_Spec(COM,strat, stop, step, itera):
         print(len(freq))
         print(freq[0])
         print(freq[-1])
-        send_message = {"pressure": "{:.3f}".format(pressure), "frequency": freq.tolist(), "magnitude": spec[1:]  }
+        send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
     return
     
