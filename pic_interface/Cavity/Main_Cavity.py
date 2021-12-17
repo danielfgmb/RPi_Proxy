@@ -264,13 +264,14 @@ def arnist(COM,strat, stop, step, itera):
 def Do_analise_Spec(COM,strat, stop, step, itera):
     global serial_pressure
     sererial_Spec = int_com(COM)
+    freq = np.arange(strat, stop, step)
     for l in range(0,itera):
         act_generator(sererial_Spec)
         set_sga(sererial_Spec)
         scn22(sererial_Spec, strat, stop, step)
         data = get_data(sererial_Spec)
         spec= evalute_data_Final(data)
-        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "magnitude": spec  }
+        send_message = {"pressure": "{:.3f}".format(PPT200.get_pressure(serial_pressure)), "frequency": freq, "magnitude": spec  }
         print(json.dumps(send_message, indent=4))
     return
     
