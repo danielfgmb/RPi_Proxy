@@ -328,7 +328,7 @@ def Mauser_pressure():
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
         send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
-        time.sleep(0.5)
+        time.sleep(0.005)
     return
 
 
