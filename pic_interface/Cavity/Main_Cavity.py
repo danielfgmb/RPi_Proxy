@@ -310,7 +310,7 @@ def Set_Up_Exp(gas_select,gas_amount):
     Vacum_Pump_stat(ON)
     time.sleep(5)
     Valve_cut_off_stat(ON)
-    time.sleep(50)
+    time.sleep(10)
     # wait untly pressure is less them press_back
     Valve_cut_off_stat(OFF)
     Inject_Gas(gas_select, gas_amount)
