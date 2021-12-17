@@ -288,7 +288,7 @@ def evalute_data_Final(data):
     while (index>1):
         print(data[index])
         if (data[index] == 255):
-            index -=1
+            # index -=1
             break
         index-=1
     print(index)
