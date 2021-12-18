@@ -79,6 +79,7 @@ def do_init(config_json):
                                                     baudrate=int(config_json['serial_port']['baud']),\
                                                     timeout = int(config_json['serial_port']['death_timeout']))
             except serial.SerialException:
+                
                 #LOG_WARNING: couldn't open serial port exp_port. Port doesnt exist or is in use
                 pass
             else:
