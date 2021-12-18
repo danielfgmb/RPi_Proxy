@@ -45,7 +45,7 @@ def receive_data_from_exp():
 #ALGURES AQUI HA BUG QUANDO NAO ESTA EM NENHUMA DAS PORTAS
 def try_to_lock_experiment(config_json, serial_port):
     #LOG_INFO
-    if  == config_json['id']:
+    if 1 == config_json['id']:
         #LOG_INFO
         print("ENCONTREI O PIC QUE QUERIA NA PORTA SERIE")
         if match.group("exp_state") == "STOPED":
