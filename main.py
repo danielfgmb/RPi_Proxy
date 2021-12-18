@@ -36,13 +36,13 @@ HEADERS = {
   "Content-Type": "application/json"
 }
 
-def send_exp_data(config):
+def send_exp_data(config_exp):
     global SAVE_DATA
     global Working
     global next_execution
     global lock
     while True:
-        exp_data = interface.receive_data_from_exp(config)
+        exp_data = interface.receive_data_from_exp(config,config_exp)
         if exp_data == True:
             Working = False
             next_execution = {}

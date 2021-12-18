@@ -3,7 +3,6 @@ import requests
 
 
 def SendPartialResult(config,msg):
-    global next_execution
     # print(next_execution)
     print(str(msg))
     HEADERS = { 

@@ -71,7 +71,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     
 
 
-def Do_experiment(serial_pressure, serial_arinst,id_exe,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
+def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
     global next_execution
     next_execution = id_exe
     print("F_start: ", strat)
