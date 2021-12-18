@@ -4,8 +4,8 @@ import serial
 import json
 import re
 
-import PPT200 as PPT200
-import Arinst as Arinst
+import pic_interface.PPT200 as PPT200
+import pic_interface.Arinst as Arinst
 
 serial_port = None
 list_of_ports = {}
