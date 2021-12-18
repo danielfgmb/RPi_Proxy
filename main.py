@@ -43,19 +43,7 @@ def send_exp_data(config):
     global lock
     while True:
         exp_data = interface.receive_data_from_exp(config)
-        print(exp_data)
-        try:
-            exp_data = json.loads(exp_data)
-        except:
-            pass
-        if exp_data != "DATA_END":
-            
-            SAVE_DATA.append(exp_data)
-            send_message = {"execution":int(next_execution["id"]),"value":exp_data,"result_type":"p"}#,"status":"running"}
-            SendPartialResult(send_message)
-        else:
-            send_message = {"execution":int(next_execution["id"]),"value":SAVE_DATA,"result_type":"f"}
-            SendPartialResult(send_message)
+        if exp_data == True:
             Working = False
             next_execution = {}
             time.sleep(0.00001)

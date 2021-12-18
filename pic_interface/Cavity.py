@@ -90,3 +90,4 @@ def Do_experiment(serial_pressure, serial_arinst,id_exe,strat, stop, step, itera
     time.sleep(5)
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
     send_data.SendPartialResult(send_message)
+    return True
