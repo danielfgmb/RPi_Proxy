@@ -76,7 +76,6 @@ def do_init(config_json):
             else:
                 if try_to_lock_experiment(exp_port, serial_port) :
                     list_of_ports[exp_port]=serial_port
-                    break
                 else:
                     serial_port.close()
         if serial_port.is_open :
