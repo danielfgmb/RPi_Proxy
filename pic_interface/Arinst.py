@@ -2,8 +2,11 @@ import sys
 import serial
 import numpy as np
 import json
+import threading
 
 from datetime import datetime
+
+
 
 def act_generator(ser):
     
@@ -67,16 +70,15 @@ def Test_Arinst(sererial_Spec,strat, stop, step, itera):
         print(json.dumps(send_message, indent=4))
     return True
 
-def Do_analise_Spec(COM,strat, stop, step, itera):
+def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     global serial_pressure
     global pressure
-    sererial_Spec = int_com(COM)
     freq = np.arange(strat, stop, step)
     for l in range(0,itera):
-        act_generator(sererial_Spec)
-        set_sga(sererial_Spec)
-        scn22(sererial_Spec, strat, stop, step)
-        data = get_data(sererial_Spec)
+        act_generator(serial_arinst)
+        set_sga(serial_arinst)
+        scn22(serial_arinst, strat, stop, step)
+        data = get_data(serial_arinst)
         spec= evalute_data_Final(data)
         # print(len(spec[1:]))
         # print(len(freq))

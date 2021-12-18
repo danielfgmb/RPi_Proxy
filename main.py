@@ -36,17 +36,13 @@ HEADERS = {
   "Content-Type": "application/json"
 }
 
-def send_exp_data():
+def send_exp_data(config):
     global SAVE_DATA
     global Working
     global next_execution
     global lock
-    while interface.receive_data_from_exp() != "DATA_START":
-        pass
-    # send_message = {"value":"","result_type":"p"}#,"status":"Experiment Starting"}
-    # SendPartialResult(send_message)
     while True:
-        exp_data = interface.receive_data_from_exp()
+        exp_data = interface.receive_data_from_exp(config)
         print(exp_data)
         try:
             exp_data = json.loads(exp_data)
@@ -70,9 +66,10 @@ def Send_Config_to_Pic(myjson):
     global Working
     global Waiting_for_config
     print("Recebi mensagem de configurestart. A tentar configurar pic")
-    actual_config, config_feita_correcta = interface.do_config(myjson)
-    if config_feita_correcta :   #se config feita igual a pedida? (opcional?)
-        data_thread = threading.Thread(target=send_exp_data,daemon=True)
+    # actual_config, config_feita_correcta = interface.do_config(myjson)
+    print(myjson)
+    if True :   #se config feita igual a pedida? (opcional?)
+        data_thread = threading.Thread(target=send_exp_data,args=(myjson,),daemon=True)
         print("PIC configurado.\n")
         if interface.do_start():                            #tentar começar experiencia
             print("aqui")

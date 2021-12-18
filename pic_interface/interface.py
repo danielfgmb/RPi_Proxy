@@ -6,6 +6,7 @@ import re
 
 import pic_interface.PPT200 as PPT200
 import pic_interface.Arinst as Arinst
+import pic_interface.Cavity as Cavity
 
 serial_port = None
 list_of_ports = {}
@@ -20,30 +21,9 @@ def print_serial():
         if len(pic_message.strip()) > 1: #Apanha os casos em que o pic manda /n/r
             print(pic_message.strip())
 
-def receive_data_from_exp():
-    global serial_port
-
-    print("A PROCURA DE INFO NA PORTA SERIE\n")
-    pic_message = serial_port.read_until(b'\r')
-    pic_message = pic_message.decode(encoding='ascii')
-    print("MENSAGEM DO PIC:\n")
-    print(pic_message)
-    print("\-------- --------/\n")
-    if "DAT" in pic_message:
-        print("ENCONTREI INFO\nEXPERIENCIA COMECOU")
-        return "DATA_START"
-    elif "END" in pic_message:
-        print("ENCONTREI INFO\nEXPERIENCIA ACABOU")
-        return "DATA_END"
-    else:
-        #1       3.1911812       9.7769165       21.2292843      25.72
-        print("ENCONTREI INFO\nDADOS NA PORTA")
-        pic_message = pic_message.strip()
-        pic_message = pic_message.split("\t")
-        pic_message = '{"Sample_number":"'+str(pic_message[0])+\
-            '","Val1":"'+str(pic_message[1])+'","Val2":"'+str(pic_message[2])+\
-            '","Val3":"'+str(pic_message[3])+'","Val4":"'+str(pic_message[4])+'"}'
-        return pic_message
+def receive_data_from_exp(config):
+    global list_of_ports
+    Cavity.Do_experiment(list_of_ports["pressure_gage"], list_of_ports["arinst"],config["config"]["f_strat"]*10**6, config["config"]["f_end"]*10**6, config["config"]["f_step"]*10**6, config["config"]["iteration"], config["config"]["back_pressure"],config["config"]["pressure"],config["config"]["gas_selector"])
     
 #ALGURES AQUI HA BUG QUANDO NAO ESTA EM NENHUMA DAS PORTAS
 def try_to_lock_experiment(component, serial_port):
