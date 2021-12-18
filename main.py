@@ -178,6 +178,7 @@ if __name__ == "__main__":
     while True:
         try:
             GetConfig()
+            print(CONFIG_OF_EXP["config"])
             if interface.do_init(CONFIG_OF_EXP["config"]) :
                 main_cycle()
             else:
