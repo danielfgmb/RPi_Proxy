@@ -6,6 +6,7 @@ import re
 
 import pic_interface.PPT200 as PPT200
 import pic_interface.Arinst as Arinst
+import pic_interface.GPIO as GPIO
 import pic_interface.Cavity as Cavity
 
 serial_port = None
@@ -81,6 +82,7 @@ def do_init(config_json):
         if serial_port.is_open :
             #LOG_INFO : EXPERIMENT FOUND. INITIALIZING EXPERIMENT
             print("Consegui abrir a porta e encontrar a experiencia\n")
+            GPIO.Int_GPIO()
             #Mudar para números. Return 0 e mandar status
             return True
         else:
