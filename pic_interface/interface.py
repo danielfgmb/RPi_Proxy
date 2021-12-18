@@ -59,7 +59,7 @@ def try_to_lock_experiment(component, serial_port):
     elif component == "arinst":
         try:  
             print("checking: arinst")
-            Arinst.Do_analise_Spec(serial_port, 3008000000, 3391000000, 500000, 1)
+            Arinst.Test_Arinst(serial_port, 3008000000, 3391000000, 500000, 1)
             return True
         except:
             print("error: arinst")

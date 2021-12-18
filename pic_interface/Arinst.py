@@ -51,7 +51,21 @@ def get_data(ser):
     
     return data_get
 
-
+def Test_Arinst(sererial_Spec,strat, stop, step, itera):
+    freq = np.arange(strat, stop, step)
+    for l in range(0,itera):
+        act_generator(sererial_Spec)
+        set_sga(sererial_Spec)
+        scn22(sererial_Spec, strat, stop, step)
+        data = get_data(sererial_Spec)
+        spec= evalute_data_Final(data)
+        # print(len(spec[1:]))
+        # print(len(freq))
+        # print(freq[0])
+        # print(freq[-1])
+        send_message = { "frequency": freq.tolist(), "magnitude": spec[1:]  }
+        print(json.dumps(send_message, indent=4))
+    return True
 
 def Do_analise_Spec(COM,strat, stop, step, itera):
     global serial_pressure
