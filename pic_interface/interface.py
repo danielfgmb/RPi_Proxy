@@ -5,6 +5,7 @@ import json
 import re
 
 serial_port = None
+list_of_ports = {}
 #status, config
 
 def print_serial():
@@ -44,17 +45,7 @@ def receive_data_from_exp():
 #ALGURES AQUI HA BUG QUANDO NAO ESTA EM NENHUMA DAS PORTAS
 def try_to_lock_experiment(config_json, serial_port):
     #LOG_INFO
-    print("AH PROCURA DO PIC NA PORTA SERIE")
-    pic_message = serial_port.read_until(b'\r')
-    pic_message = pic_message.decode(encoding='ascii')
-    pic_message = pic_message.strip()
-    print("MENSAGEM DO PIC:\n")
-    print(pic_message)
-    print("\-------- --------/\n")
-    match = re.search(r"^(IDS)\s(?P<exp_name>[^ \t]+)\s(?P<exp_state>[^ \t]+)$",pic_message)
-    print(config_json['id'])
-    print(match.group("exp_name"))
-    if match.group("exp_name") == config_json['id']:
+    if  == config_json['id']:
         #LOG_INFO
         print("ENCONTREI O PIC QUE QUERIA NA PORTA SERIE")
         if match.group("exp_state") == "STOPED":
@@ -78,7 +69,7 @@ def do_init(config_json):
     global serial_port
 
     if 'serial_port' in config_json:
-        for exp_port in config_json['serial_port']['ports_restrict']:
+        for exp_port in config_json['serial_port'].keys():
             print("A tentar abrir a porta"+exp_port+"\n")
             try:
                 #alterar esta função para aceitar mais definições do json
@@ -95,7 +86,7 @@ def do_init(config_json):
                     break
                 else:
                     serial_port.close()
-        
+
         if serial_port.is_open :
             #LOG_INFO : EXPERIMENT FOUND. INITIALIZING EXPERIMENT
             print("Consegui abrir a porta e encontrar a experiencia\n")
