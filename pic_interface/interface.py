@@ -24,7 +24,7 @@ def print_serial():
 
 def receive_data_from_exp(send_config,config):
     global list_of_ports
-    return Cavity.Do_experiment(send_config,config["id"],list_of_ports["pressure_gage"], list_of_ports["arinst"],config["config"]["f_strat"]*10**6, config["config"]["f_end"]*10**6, config["config"]["f_step"]*10**6, config["config"]["n_iteration"], config["config"]["back_pressure"],config["config"]["pressure"],config["config"]["gas_selector"])
+    return Cavity.Do_experiment(send_config,send_config,config["id"],list_of_ports["pressure_gage"], list_of_ports["arinst"],config["config"]["f_strat"]*10**6, config["config"]["f_end"]*10**6, config["config"]["f_step"]*10**6, config["config"]["n_iteration"], config["config"]["back_pressure"],config["config"]["pressure"],config["config"]["gas_selector"])
     
 #ALGURES AQUI HA BUG QUANDO NAO ESTA EM NENHUMA DAS PORTAS
 def try_to_lock_experiment(component, serial_port):
