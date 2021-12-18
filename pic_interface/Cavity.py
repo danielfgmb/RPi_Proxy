@@ -23,11 +23,13 @@ ON = 1
 OFF = 1
 next_execution = None
 config_send = None
+exp_run = None
 SAVE_DATA = []
 
 def Mauser_pressure(serial_pressure):
     global pressure
-    while True:
+    global exp_run
+    while exp_run:
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
         send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
@@ -75,6 +77,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
 def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
     global next_execution
     global config_send
+    global exp_run
     config_send = config
     next_execution = id_exe
     print("F_start: ", strat)
@@ -84,6 +87,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     print("back_pressure: ",back_ground)
     print("pressure: ",gas_pressure )
     print("gas_selector: ", gas_type)
+    exp_run =True
     data_thread = threading.Thread(target=Mauser_pressure,args=(serial_pressure,),daemon=True)
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
     data_thread.start()
@@ -91,6 +95,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     Set_Up_Exp(gas_type,gas_pressure)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
+    exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
     send_data.SendPartialResult(config_send,send_message)
     return True
