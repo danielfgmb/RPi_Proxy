@@ -56,6 +56,7 @@ def try_to_lock_experiment(component, serial_port):
 #e escrever detalhes no log do sistema
 def do_init(config_json):
     global serial_port
+    global list_of_ports
     print("Aqui")
     if 'serial_port' in config_json:
         print("entrou")
@@ -128,25 +129,11 @@ def do_config(config_json) :
 
 def do_start() :
     global serial_port
-
-    print("A tentar comecar a experiencia\n")
-    cmd = "str\r"
-    cmd = cmd.encode(encoding='ascii')
-    serial_port.reset_input_buffer()
-    serial_port.write(cmd)
-    while True :
-        pic_message = serial_port.read_until(b'\r')
-        print("MENSAGEM DO PIC A CONFIRMAR STROK:\n")
-        print(pic_message.decode(encoding='ascii'))
-        print("\-------- --------/\n")
-        if "STROK" in pic_message.decode(encoding='ascii') :
-            return True
-        elif re.search(r"(STOPED|CONFIGURED|RESETED){1}$",pic_message.decode(encoding='ascii')) != None:
-            return False
-        #elif "STOPED" or "CONFIGURED" or "RESETED" in pic_message.decode(encoding='ascii') :
-        #    return False
-        #Aqui não pode ter else: false senão rebenta por tudo e por nada
-        #tem de se apontar aos casos especificos -_-
+    return True
+    #elif "STOPED" or "CONFIGURED" or "RESETED" in pic_message.decode(encoding='ascii') :
+    #    return False
+    #Aqui não pode ter else: false senão rebenta por tudo e por nada
+    #tem de se apontar aos casos especificos -_-
     
 
 def do_stop() :
