@@ -84,7 +84,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     print("back_pressure: ",back_ground)
     print("pressure: ",gas_pressure )
     print("gas_selector: ", gas_type)
-    data_thread = threading.Thread(target=Mauser_pressure,args=(serial_pressure,config,),daemon=True)
+    data_thread = threading.Thread(target=Mauser_pressure,args=(serial_pressure,),daemon=True)
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
     data_thread.start()
     # Set Up experiment:
