@@ -16,10 +16,13 @@ from datetime import datetime
 import pic_interface.PPT200 as PPT200
 import pic_interface.Arinst as Arinst
 import pic_interface.GPIO as GPIO
+import pic_interface.Send_data as send_data
 
 presure = None
 ON = 1
 OFF = 1
+next_execution = None
+SAVE_DATA = []
 
 def Mauser_pressure(serial_pressure):
     global pressure
@@ -28,6 +31,9 @@ def Mauser_pressure(serial_pressure):
         send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
         time.sleep(0.005)
+        SAVE_DATA.append(send_message)
+        send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
+        send_data.SendPartialResult(send_message)
     return
 
 
@@ -58,11 +64,16 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
         # print(freq[-1])
         send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
+        SAVE_DATA.append(send_message)
+        send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
+        send_data.SendPartialResult(send_message)
     return
     
 
 
-def Do_experiment(serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
+def Do_experiment(serial_pressure, serial_arinst,id_exe,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
+    global next_execution
+    next_execution = id_exe
     print("F_start: ", strat)
     print("F_end: ", stop)
     print("F_step: ", step)
@@ -77,3 +88,5 @@ def Do_experiment(serial_pressure, serial_arinst,strat, stop, step, itera,back_g
     Set_Up_Exp(gas_type,gas_pressure)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
+    send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
+    send_data.SendPartialResult(send_message)
