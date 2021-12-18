@@ -87,7 +87,7 @@ def do_init(config_json):
                 #LOG_WARNING: couldn't open serial port exp_port. Port doesnt exist or is in use
                 pass
             else:
-                if try_to_lock_experiment(config_json, serial_port) :
+                if try_to_lock_experiment(exp_port, serial_port) :
                     list_of_ports[exp_port]=serial_port
                     break
                 else:
