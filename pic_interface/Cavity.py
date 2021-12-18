@@ -22,9 +22,10 @@ presure = None
 ON = 1
 OFF = 1
 next_execution = None
+config_send = None
 SAVE_DATA = []
 
-def Mauser_pressure(serial_pressure,config):
+def Mauser_pressure(serial_pressure):
     global pressure
     while True:
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
@@ -33,7 +34,7 @@ def Mauser_pressure(serial_pressure,config):
         time.sleep(0.005)
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
-        send_data.SendPartialResult(config,send_message)
+        send_data.SendPartialResult(config_send,send_message)
     return
 
 
@@ -66,13 +67,15 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
         print(json.dumps(send_message, indent=4))
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
-        send_data.SendPartialResult(send_message)
+        send_data.SendPartialResult(config_send,send_message)
     return
     
 
 
 def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
     global next_execution
+    global config_send
+    config_send = config
     next_execution = id_exe
     print("F_start: ", strat)
     print("F_end: ", stop)
@@ -89,5 +92,5 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
-    send_data.SendPartialResult(config,send_message)
+    send_data.SendPartialResult(config_send,send_message)
     return True
