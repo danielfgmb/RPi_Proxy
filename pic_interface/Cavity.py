@@ -76,4 +76,4 @@ def Do_experiment(serial_pressure, serial_arinst,strat, stop, step, itera,back_g
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
-    time.sleep(10)
+    time.sleep(5)
