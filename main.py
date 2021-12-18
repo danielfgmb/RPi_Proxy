@@ -8,7 +8,7 @@ import configparser
 import serial
 import json
 import re
-import pic_interface.interface as interface
+# import pic_interface.interface as interface
 
 
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     # global next_execution
     connected = None
     # importlib.import_module("pic_interface.PPT200")
-    # interface = importlib.import_module("pic_interface.interface")
+    interface = importlib.import_module("pic_interface.interface")
     while True:
         try:
             GetConfig()
