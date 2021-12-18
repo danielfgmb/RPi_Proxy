@@ -67,27 +67,26 @@ def try_to_lock_experiment(config_json, serial_port):
 #e escrever detalhes no log do sistema
 def do_init(config_json):
     global serial_port
-
     if 'serial_port' in config_json:
         for exp_port in config_json['serial_port'].keys():
-            print("A tentar abrir a porta"+exp_port+"\n")
+            print("A tentar abrir a porta "+config_json['serial_port'][exp_port]["port"]+"\n")
             try:
                 #alterar esta função para aceitar mais definições do json
                 #é preciso uma função para mapear os valores para as constantes da porta série
                 #e.g. - 8 bits de data -> serial.EIGHTBITS; 1 stopbit -> serial.STOPBITS_ONE
-                serial_port = serial.Serial(port = exp_port,\
-                                                    baudrate=int(config_json['serial_port']['baud']),\
-                                                    timeout = int(config_json['serial_port']['death_timeout']))
+                serial_port = serial.Serial(port = config_json['serial_port'][exp_port]["port"],\
+                                                    baudrate=int(config_json['serial_port'][exp_port]['baud']),\
+                                                    timeout = int(config_json['serial_port'][exp_port]['death_timeout']))
             except serial.SerialException:
                 
                 #LOG_WARNING: couldn't open serial port exp_port. Port doesnt exist or is in use
                 pass
             else:
                 if try_to_lock_experiment(config_json, serial_port) :
+                    list_of_ports[exp_port]=serial_port
                     break
                 else:
                     serial_port.close()
-
         if serial_port.is_open :
             #LOG_INFO : EXPERIMENT FOUND. INITIALIZING EXPERIMENT
             print("Consegui abrir a porta e encontrar a experiencia\n")
