@@ -4,6 +4,9 @@ import serial
 import json
 import re
 
+import PPT200 as PPT200
+import Arinst as Arinst
+
 serial_port = None
 list_of_ports = {}
 #status, config
@@ -43,18 +46,20 @@ def receive_data_from_exp():
         return pic_message
     
 #ALGURES AQUI HA BUG QUANDO NAO ESTA EM NENHUMA DAS PORTAS
-def try_to_lock_experiment(config_json, serial_port):
+def try_to_lock_experiment(component, serial_port):
     #LOG_INFO
-    if 1 == config_json['id']:
-        #LOG_INFO
-        print("ENCONTREI O PIC QUE QUERIA NA PORTA SERIE")
-        if match.group("exp_state") == "STOPED":
+    if component == "pressure_gage":
+        try:
+            PPT200.get_pressure(serial_port)
             return True
-        else:
-            if do_stop():
-                return True
-            else:
-                return False
+        except:
+            return False
+    elif component == "arinst":
+        try:  
+            Arinst.Do_analise_Spec(serial_port, 3008000000, 3391000000, 500000, 1)
+            return True
+        except:
+            return False
     else:
         #LOG INFO
         print("NAO ENCONTREI O PIC QUE QUERIA NA PORTA SERIE")
