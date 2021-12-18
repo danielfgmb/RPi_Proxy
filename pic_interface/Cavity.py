@@ -43,6 +43,24 @@ def Set_Up_Exp(gas_select,gas_amount):
     return
 
 
+def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
+    global pressure
+    freq = np.arange(strat, stop, step)
+    for l in range(0,itera):
+        Arinst.act_generator(serial_arinst)
+        Arinst.set_sga(serial_arinst)
+        Arinst.scn22(serial_arinst, strat, stop, step)
+        data = Arinst.get_data(serial_arinst)
+        spec= Arinst.evalute_data_Final(data)
+        # print(len(spec[1:]))
+        # print(len(freq))
+        # print(freq[0])
+        # print(freq[-1])
+        send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
+        print(json.dumps(send_message, indent=4))
+    return
+    
+
 
 def Do_experiment(serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
     print("F_start: ", strat)
@@ -57,5 +75,5 @@ def Do_experiment(serial_pressure, serial_arinst,strat, stop, step, itera,back_g
     data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
-    Arinst.Do_analise_Spec(serial_arinst, strat, stop, step, itera)
+    Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(10)

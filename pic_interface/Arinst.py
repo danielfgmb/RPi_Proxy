@@ -70,24 +70,6 @@ def Test_Arinst(sererial_Spec,strat, stop, step, itera):
         print(json.dumps(send_message, indent=4))
     return True
 
-def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
-    global serial_pressure
-    global pressure
-    freq = np.arange(strat, stop, step)
-    for l in range(0,itera):
-        act_generator(serial_arinst)
-        set_sga(serial_arinst)
-        scn22(serial_arinst, strat, stop, step)
-        data = get_data(serial_arinst)
-        spec= evalute_data_Final(data)
-        # print(len(spec[1:]))
-        # print(len(freq))
-        # print(freq[0])
-        # print(freq[-1])
-        send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
-        print(json.dumps(send_message, indent=4))
-    return
-    
 #data_final = arnist('COM3',3308000000, 3891000000, 500000, 4)
 
 def evalute_data_Final(data):
