@@ -76,7 +76,9 @@ def try_to_lock_experiment(component, serial_port):
 #e escrever detalhes no log do sistema
 def do_init(config_json):
     global serial_port
+    print("Aqui")
     if 'serial_port' in config_json:
+        print("entrou")
         for exp_port in config_json['serial_port'].keys():
             print("A tentar abrir a porta "+config_json['serial_port'][exp_port]["port"]+"\n")
             try:
