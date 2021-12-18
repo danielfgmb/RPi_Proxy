@@ -50,15 +50,19 @@ def try_to_lock_experiment(component, serial_port):
     #LOG_INFO
     if component == "pressure_gage":
         try:
+            print("checking: pressure_gage")
             PPT200.get_pressure(serial_port)
             return True
         except:
+            print("error: pressure_gage")
             return False
     elif component == "arinst":
         try:  
+            print("checking: arinst")
             Arinst.Do_analise_Spec(serial_port, 3008000000, 3391000000, 500000, 1)
             return True
         except:
+            print("error: arinst")
             return False
     else:
         #LOG INFO
