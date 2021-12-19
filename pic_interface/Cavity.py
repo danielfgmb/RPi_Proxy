@@ -95,6 +95,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     Set_Up_Exp(gas_type,gas_pressure)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
+    GPIO.Vacum_Pump_stat(OFF)
     exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
     send_data.SendPartialResult(config_send,send_message)
