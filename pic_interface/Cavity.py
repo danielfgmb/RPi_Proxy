@@ -94,7 +94,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
     time.sleep(10)
-    GPIO.Discharge_stat(ON)
+    GPIO.Discharge_stat(OFF)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
     GPIO.Discharge_stat(OFF)
