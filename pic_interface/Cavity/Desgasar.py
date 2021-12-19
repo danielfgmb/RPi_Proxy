@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # Set Up experiment:
     M_C.Vacum_Pump_stat(1)
     while True:
-        if input() == 0:
+        if input() == '0':
            stop=0
            M_C.Vacum_Pump_stat(0)
            break
