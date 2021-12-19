@@ -33,7 +33,7 @@ def Mauser_pressure(serial_pressure):
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
         send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
-        time.sleep(0.005)
+        time.sleep(0.001)
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
         send_data.SendPartialResult(config_send,send_message)
@@ -93,7 +93,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
-    time.sleep(3)
+    time.sleep(10)
     GPIO.Discharge_stat(ON)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
