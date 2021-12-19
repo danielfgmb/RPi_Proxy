@@ -62,7 +62,7 @@ def Valve_cut_off_stat(ON_OFF):
 
 def Inject_Gas(gas_type, amount):
     if gas_type == 1:
-        print("\n\n\n\n\n\n\n\n\n\n\nAOQOQO\n\n\n\n\n\n\n\n\n")
+        # print("\n\n\n\n\n\n\n\n\n\n\nAOQOQO\n\n\n\n\n\n\n\n\n")
         Gas = Helio
     elif gas_type == 2:
         Gas = Argon
@@ -70,7 +70,7 @@ def Inject_Gas(gas_type, amount):
         Gas = Xenon
     else:
         print("ERRO: Gas selector!")
-    GPIO.output(Gas, GPIO.LOW)
-    time.sleep(amount*0.1)
-    GPIO.output(Gas, GPIO.HIGH)
+    # GPIO.output(Gas, GPIO.LOW)
+    # time.sleep(amount*0.1)
+    # GPIO.output(Gas, GPIO.HIGH)
     return
