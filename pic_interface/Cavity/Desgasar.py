@@ -4,11 +4,11 @@ import json
 import time
 import threading
 
-
+stop = 1
 def Mauser_pressure():
     global serial_pressure
-    global pressure
-    while True:
+    global stop
+    while stop:
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
         send_message = {"pressure": pressure}
         print(json.dumps(send_message, indent=4))
@@ -25,6 +25,7 @@ if __name__ == "__main__":
     M_C.Vacum_Pump_stat(1)
     while True:
         if input() == 0:
+           stop=0
            M_C.Vacum_Pump_stat(0)
            break
         else:
