@@ -62,6 +62,7 @@ def Valve_cut_off_stat(ON_OFF):
 
 def Inject_Gas(gas_type, amount):
     if gas_type == 1:
+        print("\n\n\n\n\n\n\n\n\n\n\nAOQOQO\n\n\n\n\n\n\n\n\n")
         Gas = Helio
     elif gas_type == 2:
         Gas = Argon
