@@ -20,7 +20,7 @@ import pic_interface.Send_data as send_data
 
 presure = None
 ON = 1
-OFF = 1
+OFF = 0
 next_execution = None
 config_send = None
 exp_run = None
