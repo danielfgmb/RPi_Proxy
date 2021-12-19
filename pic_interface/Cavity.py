@@ -31,7 +31,7 @@ def Mauser_pressure(serial_pressure):
     global exp_run
     while exp_run:
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
-        send_message = {"pressure": pressure}
+        send_message = {"time":str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),"pressure": pressure}
         print(json.dumps(send_message, indent=4))
         time.sleep(0.001)
         SAVE_DATA.append(send_message)
@@ -65,7 +65,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
         # print(len(freq))
         # print(freq[0])
         # print(freq[-1])
-        send_message = {"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
+        send_message = {"time":str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),"pressure": pressure, "frequency": freq.tolist(), "magnitude": spec[1:]  }
         print(json.dumps(send_message, indent=4))
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
