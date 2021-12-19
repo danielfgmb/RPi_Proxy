@@ -45,7 +45,7 @@ def Set_Up_Exp(gas_select,gas_amount):
     GPIO.Vacum_Pump_stat(ON)
     time.sleep(5)
     GPIO.Valve_cut_off_stat(ON)
-    time.sleep(40)
+    time.sleep(120)
     # wait untly pressure is less them press_back
     GPIO.Valve_cut_off_stat(OFF)
     GPIO.Inject_Gas(gas_select, gas_amount)
