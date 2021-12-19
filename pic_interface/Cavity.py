@@ -93,8 +93,10 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
+    GPIO.Discharge_stat(ON)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
+    GPIO.Discharge_stat(OFF)
     GPIO.Vacum_Pump_stat(OFF)
     exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
