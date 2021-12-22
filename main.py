@@ -163,6 +163,11 @@ if __name__ == "__main__":
 
 
 
+# TODO: o que fazer se a arinst estiver desligado
+
+
+
+
 # global CONFIG_OF_EXP
 # global interface
 # interface = importlib.import_module("pic_interface.interface")
