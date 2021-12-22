@@ -74,7 +74,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     
 
 
-def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type):
+def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type,Discharge,Magnite_field):
     global next_execution
     global config_send
     global exp_run
@@ -94,10 +94,24 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
     time.sleep(10)
-    GPIO.Discharge_stat(OFF)
+    if (Discharge == 1):
+        GPIO.Discharge_stat(ON)
+    if (Magnite_field == 1):    
+        GPIO.Magnite_1_stat(ON)
+    elif (Magnite_field == 2):
+        GPIO.Magnite_1_stat(ON) 
+        time.sleep(5)
+        GPIO.Magnite_2_stat(ON)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
-    GPIO.Discharge_stat(OFF)
+    if (Discharge == 1):
+        GPIO.Discharge_stat(OFF)
+    if (Magnite_field == 1):    
+        GPIO.Magnite_1_stat(OFF)
+    elif (Magnite_field == 2):
+        GPIO.Magnite_1_stat(OFF) 
+        time.sleep(5)
+        GPIO.Magnite_2_stat(OFF)
     GPIO.Vacum_Pump_stat(OFF)
     exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}

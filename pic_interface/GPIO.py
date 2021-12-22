@@ -18,6 +18,8 @@ Discharge=5
 Helio = 17
 Argon = 27
 Xenon = 22
+Magnite_1 = 6
+Magnite_2 = 26
 
 
 
@@ -28,9 +30,11 @@ def Int_GPIO():
     
     GPIO.setup(Helio, GPIO.OUT, initial=GPIO.HIGH)
     GPIO.setup(Argon, GPIO.OUT, initial=GPIO.HIGH)
-
     GPIO.setup(Xenon, GPIO.OUT, initial=GPIO.HIGH)
+    
     GPIO.setup(Discharge, GPIO.OUT, initial=GPIO.HIGH)
+    GPIO.setup(Magnite_1, GPIO.OUT, initial=GPIO.HIGH)
+    GPIO.setup(Magnite_2, GPIO.OUT, initial=GPIO.HIGH)
     return
 
 def Discharge_stat(ON_OFF):
@@ -38,6 +42,24 @@ def Discharge_stat(ON_OFF):
         GPIO.output(Discharge, GPIO.LOW)
     elif int(ON_OFF) == 0:
         GPIO.output(Discharge, GPIO.HIGH)
+    else:
+        print("ERROR on the Discharge")
+    return
+
+def Magnite_1_stat(ON_OFF):
+    if int(ON_OFF) == 1:
+        GPIO.output(Magnite_1, GPIO.LOW)
+    elif int(ON_OFF) == 0:
+        GPIO.output(Magnite_1, GPIO.HIGH)
+    else:
+        print("ERROR on the Discharge")
+    return
+
+def Magnite_2_stat(ON_OFF):
+    if int(ON_OFF) == 1:
+        GPIO.output(Magnite_2, GPIO.LOW)
+    elif int(ON_OFF) == 0:
+        GPIO.output(Magnite_2, GPIO.HIGH)
     else:
         print("ERROR on the Discharge")
     return
