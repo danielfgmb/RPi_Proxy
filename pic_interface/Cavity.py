@@ -29,6 +29,7 @@ SAVE_DATA = []
 def Mauser_pressure(serial_pressure):
     global pressure
     global exp_run
+    global SAVE_DATA
     while exp_run:
         pressure = "{:.3f}".format(PPT200.get_pressure(serial_pressure))
         send_message = {"time":str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),"pressure": pressure}
@@ -54,6 +55,7 @@ def Set_Up_Exp(gas_select,gas_amount):
 
 def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     global pressure
+    global SAVE_DATA
     freq = np.arange(strat, stop, step)
     for l in range(0,itera):
         Arinst.act_generator(serial_arinst)
@@ -78,6 +80,8 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     global next_execution
     global config_send
     global exp_run
+    global SAVE_DATA
+    SAVE_DATA =[]
     config_send = config
     next_execution = id_exe
     print("F_start: ", strat)
@@ -116,4 +120,5 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
     send_data.SendPartialResult(config_send,send_message)
+    SAVE_DATA = []
     return True
