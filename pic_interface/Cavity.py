@@ -97,9 +97,10 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     data_thread.start()
     # Set Up experiment:
     Set_Up_Exp(gas_type,gas_pressure)
+    time.sleep(2)
     if (Discharge == 1):
         GPIO.Discharge_stat(ON)
-    time.sleep(10)
+    time.sleep(2)
     if (Magnite_field == 1):    
         GPIO.Magnite_1_stat(ON)
         time.sleep(5)
@@ -107,7 +108,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
         GPIO.Magnite_2_stat(ON)
         time.sleep(0.1)
         GPIO.Magnite_1_stat(ON)
-        time.sleep(5)
+        time.sleep(2)
     Do_analise_Spec(serial_arinst, strat, stop, step, itera)
     time.sleep(5)
     if (Discharge == 1):
