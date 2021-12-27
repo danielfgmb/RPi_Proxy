@@ -23,6 +23,7 @@ if __name__ == "__main__":
     data_thread.start()
     # Set Up experiment:
     M_C.Vacum_Pump_stat(1)
+    M_C.Inject_Gas(1,0.006)
     while True:
         if input() == '0':
            stop=0
