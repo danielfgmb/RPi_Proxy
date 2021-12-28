@@ -92,7 +92,7 @@ def Inject_Gas(gas_type, amount):
         Gas = Xenon
     else:
         print("ERRO: Gas selector!")
-    GPIO.output(Gas, GPIO.LOW)
-    time.sleep(0.006)
-    GPIO.output(Gas, GPIO.HIGH)
+    # GPIO.output(Gas, GPIO.LOW)
+    # time.sleep(0.006)
+    # GPIO.output(Gas, GPIO.HIGH)
     return
