@@ -12,8 +12,8 @@ OFF = 0
 
 pressure = 0
 serial_pressure = None
-Valve_cut_off = 13
-Vacum_Pump=23
+Valve_cut_off = 23  # will be 13 but for now is the 23 because we only have a valvu
+Vacum_Pump=12
 Discharge=5
 Helio = 17
 Argon = 27
