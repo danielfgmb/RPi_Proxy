@@ -44,14 +44,18 @@ def Mauser_pressure(serial_pressure):
 
 def Set_Up_Exp(pressure_ref,gas_select,gas_amount):
     global pressure
-    max_time = 20000
+    max_time = 2000
     numero = 0 
+    ligar = 1
     GPIO.Vacum_Pump_stat(ON)
     time.sleep(5)
     while (float(pressure)>float(pressure_ref)):
         print(pressure)
         numero = numero +1
-        GPIO.Valve_cut_off_stat(ON)
+        if (ligar == 1):
+            GPIO.Valve_cut_off_stat(ON)
+            ligar = 0
+        time.sleep(1)
         if numero >max_time:
             break        
     time.sleep(5)
