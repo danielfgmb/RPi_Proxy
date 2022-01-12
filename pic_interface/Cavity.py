@@ -103,7 +103,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     data_thread.start()
     # Set Up experiment:
     
-    Set_Up_Exp(gas_type,gas_pressure)
+    Set_Up_Exp(back_ground,gas_type,gas_pressure)
     time.sleep(2)
     if (Discharge == 1):
         GPIO.Discharge_stat(ON)
