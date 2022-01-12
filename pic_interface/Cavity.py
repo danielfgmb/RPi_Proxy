@@ -42,16 +42,22 @@ def Mauser_pressure(serial_pressure):
 
 
 
-def Set_Up_Exp(gas_select,gas_amount):
+def Set_Up_Exp(pressure_ref,gas_select,gas_amount):
+    global pressure
+    max_time = 20000
+    numero = 0 
     GPIO.Vacum_Pump_stat(ON)
     time.sleep(5)
-    GPIO.Valve_cut_off_stat(ON)
+    while (pressure>pressure_ref):
+        numero = numero +1
+        GPIO.Valve_cut_off_stat(ON)
+        if numero >max_time:
+            break        
     time.sleep(5)
     # wait untly pressure is less them press_back
     GPIO.Valve_cut_off_stat(OFF)
     GPIO.Inject_Gas(int(gas_select), gas_amount)
     return
-
 
 def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     global pressure
@@ -96,6 +102,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
     data_thread.start()
     # Set Up experiment:
+    
     Set_Up_Exp(gas_type,gas_pressure)
     time.sleep(2)
     if (Discharge == 1):
