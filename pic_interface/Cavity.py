@@ -49,8 +49,9 @@ def Set_Up_Exp(pressure_ref,gas_select,gas_amount):
     ligar = 1
     GPIO.Vacum_Pump_stat(ON)
     time.sleep(5)
-    while (float(pressure)>float(pressure_ref)):
-        print(pressure)
+    while float(pressure)>float(pressure_ref):
+        print("aqui: ",pressure)
+        print("aqui: ",pressure_ref)
         numero = numero +1
         if (ligar == 1):
             GPIO.Valve_cut_off_stat(ON)
