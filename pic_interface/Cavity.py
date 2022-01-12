@@ -49,6 +49,7 @@ def Set_Up_Exp(pressure_ref,gas_select,gas_amount):
     GPIO.Vacum_Pump_stat(ON)
     time.sleep(5)
     while (float(pressure)>float(pressure_ref)):
+        print(pressure)
         numero = numero +1
         GPIO.Valve_cut_off_stat(ON)
         if numero >max_time:
