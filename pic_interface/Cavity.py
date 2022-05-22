@@ -37,7 +37,7 @@ def Mauser_pressure(conn,HEADERS,serial_pressure):
         time.sleep(0.001)
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
-        send_data.SendPartialResult(conn,config_send,send_message,HEADERS)
+        send_data.SendPartialResult(conn,send_message,config_send,HEADERS)
     return
 
 
@@ -89,13 +89,13 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     
 
 
-def Do_experiment(conn,HEADERS,config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type,Discharge,Magnite_field):
+def Do_experiment(conn,HEADERS,config_info,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type,Discharge,Magnite_field):
     global next_execution
     global config_send
     global exp_run
     global SAVE_DATA
     SAVE_DATA =[]
-    config_send = config
+    config_send = config_info
     next_execution = id_exe
     print("F_start: ", strat)
     print("F_end: ", stop)
