@@ -26,7 +26,7 @@ config_send = None
 exp_run = None
 SAVE_DATA = []
 
-def Mauser_pressure(serial_pressure):
+def Mauser_pressure(conn,HEADERS,serial_pressure):
     global pressure
     global exp_run
     global SAVE_DATA
@@ -37,7 +37,7 @@ def Mauser_pressure(serial_pressure):
         time.sleep(0.001)
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
-        send_data.SendPartialResult(config_send,send_message)
+        send_data.SendPartialResult(conn,config_send,send_message,HEADERS)
     return
 
 
@@ -89,7 +89,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
     
 
 
-def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type,Discharge,Magnite_field):
+def Do_experiment(conn,HEADERS,config,id_exe,serial_pressure, serial_arinst,strat, stop, step, itera,back_ground,gas_pressure,gas_type,Discharge,Magnite_field):
     global next_execution
     global config_send
     global exp_run
@@ -105,7 +105,7 @@ def Do_experiment(config,id_exe,serial_pressure, serial_arinst,strat, stop, step
     print("pressure: ",gas_pressure )
     print("gas_selector: ", gas_type)
     exp_run =True
-    data_thread = threading.Thread(target=Mauser_pressure,args=(serial_pressure,),daemon=True)
+    data_thread = threading.Thread(target=Mauser_pressure,args=(conn,HEADERS,serial_pressure,),daemon=True)
     # arnist('/dev/ttyACM0', 3308000000, 3891000000, 500000, 4)
     data_thread.start()
     # Set Up experiment:

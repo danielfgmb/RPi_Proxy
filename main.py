@@ -54,7 +54,7 @@ def send_exp_data(config_exp):
     global next_execution
     global lock
     while True:
-        exp_data = interface.receive_data_from_exp(config_info,config_exp)
+        exp_data = interface.receive_data_from_exp(conn,HEADERS,config_info,config_exp)
         if exp_data == True:
             Working = False
             next_execution = {}
@@ -69,6 +69,7 @@ def Send_Config_to_Pic(myjson):
     # actual_config, config_feita_correcta = interface.do_config(myjson)
     print(myjson)
     if True :   #se config feita igual a pedida? (opcional?)
+        SendInfoAboutExecution(myjson["id"])
         data_thread = threading.Thread(target=send_exp_data,args=(myjson,),daemon=True)
         print("PIC configurado.\n")
         if interface.do_start():                            #tentar começar experiencia
