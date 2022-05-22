@@ -1,4 +1,5 @@
 import requests
+import http.client
 import json
 from datetime import datetime
 import importlib
@@ -14,8 +15,8 @@ import re
 
 lock = threading.Lock()
 
-config = configparser.ConfigParser()
-config.read('server_info.ini')
+config_info = configparser.ConfigParser()
+config_info.read('server_info.ini')
 
 FORMAT = 'utf-8'
 
@@ -32,9 +33,20 @@ Waiting_for_config = True
 interface = None
 
 HEADERS = { 
-  "Authentication": str(config['DEFAULT']['SECRET']), 
+  "Authentication": str(config_info['DEFAULT']['SECRET']), 
   "Content-Type": "application/json"
 }
+
+def SendInfoAboutExecution(id):
+    global CONFIG_OF_EXP
+    api_url = "/api/v1/execution/"+str(id)+"/status"
+    # msg = {"secret":SEGREDO}
+    print(api_url)
+    payload = json.dumps({"status": "R"})
+    conn.request("PATCH",api_url,payload,headers=HEADERS)
+    response = json.loads(conn.getresponse().read().decode('utf8'))
+    print(response)
+    return ''
 
 def send_exp_data(config_exp):
     global SAVE_DATA
@@ -42,7 +54,7 @@ def send_exp_data(config_exp):
     global next_execution
     global lock
     while True:
-        exp_data = interface.receive_data_from_exp(config,config_exp)
+        exp_data = interface.receive_data_from_exp(config_info,config_exp)
         if exp_data == True:
             Working = False
             next_execution = {}
@@ -80,26 +92,32 @@ def Send_Config_to_Pic(myjson):
 # REST
 def GetConfig():
     global CONFIG_OF_EXP
-    api_url = "http://"+config['DEFAULT']['SERVER']+":"+config['DEFAULT']['PORT']+"/api/v1/apparatus/"+config['DEFAULT']['APPARATUS_ID']
+    api_url = "/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']
     # msg = {"secret":SEGREDO}
-    response =  requests.get(api_url, headers ={"Authentication":"Secret estou bem"})
-    CONFIG_OF_EXP = response.json()["experiment"]
-    if (test_end_point_print):
+    print(api_url)
+    conn.request("GET",api_url,headers=HEADERS)
+    response = json.loads(conn.getresponse().read().decode('utf8'))
+    print(response)
+    CONFIG_OF_EXP = response
+    if config_info['DEFAULT']['DEBUG'] == "on":
         print(json.dumps(CONFIG_OF_EXP,indent=4))
     return ''
 
 def GetExecution():
     global next_execution
-    api_url = "http://"+config['DEFAULT']['SERVER']+":"+config['DEFAULT']['PORT']+"/api/v1/apparatus/"+config['DEFAULT']['APPARATUS_ID']+"/nextexecution"
-    response =  requests.get(api_url,headers = HEADERS)
-    print(response.json())
+    api_url = "/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']+"/nextexecution"
 
+    conn.request("GET",api_url,headers=HEADERS)
+    response = json.loads(conn.getresponse().read().decode('utf8'))
 
-    next_execution = response.json()
-    if (test_end_point_print):
+    if (response['protocol']['config'] !=None):
+        print(response)
+        next_execution = response
+    if config_info['DEFAULT']['DEBUG'] == "on":
         print("REQUEST\n")
         print(json.dumps(next_execution,indent=4))
     return ''
+
 
 
 
@@ -116,11 +134,11 @@ def main_cycle():
     global status_config
     global Working
     if CONFIG_OF_EXP != None:
-        if test :
+        if config_info['DEFAULT']['DEBUG'] == "on":
             print("Esta a passar pelo if none este\n")
         while True:
             if not Working:
-                if test :
+                if config_info['DEFAULT']['DEBUG'] == "on":
                     print("Esta a passar pelo if none\n")
                 GetExecution()
                 if test:
@@ -131,7 +149,7 @@ def main_cycle():
                 save_execution =next_execution.get("config",None)
                 if save_execution != None:
                     print(json.dumps(save_execution))
-                # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq 
+                # if save_execution != None:                                 # Estava a passar em cima e não sei bem pq
                     status_config=Send_Config_to_Pic(next_execution)
                 if test:
                     print("O valor do Working é: "+str(Working))
@@ -149,6 +167,7 @@ if __name__ == "__main__":
     interface = importlib.import_module("pic_interface.interface")
     while True:
         try:
+            conn = http.client.HTTPConnection(config_info['DEFAULT']['SERVER'],port=config_info['DEFAULT']['PORT'])
             GetConfig()
             print(CONFIG_OF_EXP["config"])
             if interface.do_init(CONFIG_OF_EXP["config"]) :

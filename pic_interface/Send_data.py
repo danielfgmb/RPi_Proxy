@@ -1,20 +1,20 @@
 import requests
+import http.client
 import json
 
 
-def SendPartialResult(config,msg):
+def SendPartialResult(conn,msg,config_info,HEADERS):
     # print(next_execution)
-    print(str(msg))
-    HEADERS = { 
-    "Authentication": str(config['DEFAULT']['SECRET']), 
-    "Content-Type": "application/json"
-    }
-    api_url = "http://"+config['DEFAULT']['SERVER']+":"+config['DEFAULT']['PORT']+"/api/v1/result"
-    print(api_url)
-    # todo = {"value":{"ok":"ola","ponto":"oco"},"time":datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),"result_type":"p"}
-    print("Aqui:  " ,json.dumps(msg,indent=4))
-    requests.post(api_url, headers = HEADERS, json=msg)
+    api_url = "/api/v1/result"
+    if config_info['DEFAULT']['DEBUG'] == "on":
+        print(str(msg))
+        print(api_url)
+        print("Aqui:  " ,json.dumps(msg,indent=4))
+    payload = json.dumps(msg)
+    conn.request("POST",api_url,payload,headers=HEADERS)
+    response = json.loads(conn.getresponse().read().decode('utf8'))
+    print(response)
     # Result_id = response.json()
-    # if (test_end_point_print):
-    #     print(json.dumps(Result_id,indent=4))   
+    # if config_info['DEFAULT']['DEBUG'] == "on":
+    #     print(json.dumps(Result_id,indent=4))
     return ''
