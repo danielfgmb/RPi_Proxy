@@ -171,6 +171,8 @@ if __name__ == "__main__":
             GetConfig()
             print(CONFIG_OF_EXP["config"])
             if interface.do_init(CONFIG_OF_EXP["config"]) :
+                if config_info['DEFAULT']['DEBUG'] == "on":
+                    print("Os serials não deram erro \n")
                 main_cycle()
             else:
                 print ("Experiment not found")
