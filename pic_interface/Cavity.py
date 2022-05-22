@@ -66,7 +66,7 @@ def Set_Up_Exp(pressure_ref,gas_select,gas_amount):
     GPIO.Inject_Gas(int(gas_select), gas_amount)
     return
 
-def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
+def Do_analise_Spec(conn,HEADERS,serial_arinst,strat, stop, step, itera):
     global pressure
     global SAVE_DATA
     freq = np.arange(strat, stop, step)
@@ -84,7 +84,7 @@ def Do_analise_Spec(serial_arinst,strat, stop, step, itera):
         print(json.dumps(send_message, indent=4))
         SAVE_DATA.append(send_message)
         send_message = {"execution": next_execution,"value":send_message,"result_type":"p"}#,"status":"running"}
-        send_data.SendPartialResult(config_send,send_message)
+        send_data.SendPartialResult(conn,send_message,config_send,HEADERS)
     return
     
 
@@ -123,7 +123,7 @@ def Do_experiment(conn,HEADERS,config_info,id_exe,serial_pressure, serial_arinst
         time.sleep(0.1)
         GPIO.Magnite_1_stat(ON)
         time.sleep(2)
-    Do_analise_Spec(serial_arinst, strat, stop, step, itera)
+    Do_analise_Spec(conn,HEADERS,serial_arinst, strat, stop, step, itera)
     time.sleep(5)
     if (Discharge == 1):
         GPIO.Discharge_stat(OFF)
@@ -136,6 +136,6 @@ def Do_experiment(conn,HEADERS,config_info,id_exe,serial_pressure, serial_arinst
     GPIO.Vacum_Pump_stat(OFF)
     exp_run =False
     send_message = {"execution":next_execution,"value":SAVE_DATA,"result_type":"f"}
-    send_data.SendPartialResult(config_send,send_message)
+    send_data.SendPartialResult(conn,send_message,config_send,HEADERS)
     SAVE_DATA = []
     return True
