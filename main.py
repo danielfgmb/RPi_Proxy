@@ -36,7 +36,7 @@ HEADERS = {
 
 def SendInfoAboutExecution(id):
     global CONFIG_OF_EXP
-    api_url = "https://"+config_info['DEFAULT']['SERVER']+"/api/v1/execution/"+str(id)+"/status"
+    api_url = "http://"+config_info['DEFAULT']['SERVER']+":"+config_info['DEFAULT']['PORT']+"/api/v1/execution/"+str(id)+"/status"
     # msg = {"secret":SEGREDO}
     print(api_url)
     response =  requests.patch(api_url, headers =HEADERS,json={"status": "R"})
@@ -105,7 +105,7 @@ def Send_Config_to_Pic(myjson):
 # REST
 def GetConfig():
     global CONFIG_OF_EXP
-    api_url = "https://"+config_info['DEFAULT']['SERVER']+"/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']
+    api_url = "http://"+config_info['DEFAULT']['SERVER']+":"+config_info['DEFAULT']['PORT']+"/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']
     # msg = {"secret":SEGREDO}
     print(api_url)
     response =  requests.get(api_url, headers =HEADERS)
@@ -118,7 +118,7 @@ def GetConfig():
 
 def GetExecution():
     global next_execution
-    api_url = "https://"+config_info['DEFAULT']['SERVER']+"/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']+"/nextexecution"
+    api_url = "http://"+config_info['DEFAULT']['SERVER']+":"+config_info['DEFAULT']['PORT']+"/api/v1/apparatus/"+config_info['DEFAULT']['APPARATUS_ID']+"/nextexecution"
     response =  requests.get(api_url,headers = HEADERS)
     if (response.json()['protocol']['config'] !=None):
         print(response.json())
@@ -133,7 +133,7 @@ def SendPartialResult(msg):
     global next_execution
     # print(next_execution)
     
-    api_url = "https://"+config_info['DEFAULT']['SERVER']+"/api/v1/result"
+    api_url = "http://"+config_info['DEFAULT']['SERVER']+":"+config_info['DEFAULT']['PORT']+"/api/v1/result"
     if config_info['DEFAULT']['DEBUG'] == "on":
         print(str(msg))
         print(api_url)
