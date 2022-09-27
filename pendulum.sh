@@ -5,7 +5,7 @@
 # specified) exactly match the pattern. 
 
 echo `date`
-echo v8
+echo v9
 # ruta
 
 
@@ -14,6 +14,8 @@ then
     # editar para concuerde con archivo pendulo
     echo activando openvpn 
     sudo openvpn /home/pi/pendulo1.ovpn > /dev/null 2>&1 &
+    echo durmiendo por 20s
+    sleep 20
 else
     echo vpn corriendo
 fi
