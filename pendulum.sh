@@ -5,7 +5,7 @@
 # specified) exactly match the pattern. 
 
 echo `date`
-echo v4
+echo v7
 # ruta
 
 
@@ -22,7 +22,7 @@ if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
     killall python3
-    cd /home/pi/RPi_Proxy/ && python3 main.py
+    cd /home/pi/RPi_Proxy/ && python3 main.py > /dev/null 2>&1 &
 
 else
     echo pendulo corriendo
@@ -31,7 +31,7 @@ fi
 if ! pgrep -x "ffmpeg" > /dev/null
 then
     echo activando transmision
-    sudo nohup sh ./video-stream.sh > /dev/null 2>&1 &
+    cd /home/pi/RPi_Proxy/ && sudo nohup sh video-stream.sh > /dev/null 2>&1 &
 else
     echo ffmpeg corriendo
 fi
