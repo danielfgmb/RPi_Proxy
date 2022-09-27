@@ -187,7 +187,8 @@ if __name__ == "__main__":
     # global next_execution
     connected = None
     interface = importlib.import_module("pic_interface.interface")
-    while True:
+    intentos=1
+    while intentos<10:
         try:
             GetConfig()
             print ("all good")
@@ -196,11 +197,13 @@ if __name__ == "__main__":
                 main_cycle()
             else:
                 print ("Experiment not found")
+                intentos+=1
         except:
             #LOG ERROR
             print("Faill to connect to the Server. Trying again after 10 s")
             #So faz shutdown do socket se este chegou a estar connected
             time.sleep(10)
+            intentos+=1
 
 
 

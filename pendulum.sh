@@ -5,7 +5,7 @@
 # specified) exactly match the pattern. 
 
 echo `date`
-echo v7
+echo v8
 # ruta
 
 
