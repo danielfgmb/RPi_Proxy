@@ -5,6 +5,7 @@
 # specified) exactly match the pattern. 
 
 echo `date`
+echo v4
 # ruta
 
 
@@ -20,7 +21,6 @@ fi
 if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
-
     killall python3
     python3 main.py > /dev/null 2>&1 &
 
