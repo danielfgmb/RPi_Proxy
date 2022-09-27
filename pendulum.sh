@@ -22,7 +22,7 @@ if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
     killall python3
-    cd /home/pi/RPi_Proxy/ && python3 main.py > /dev/null 2>&1 &
+    cd /home/pi/RPi_Proxy/ && python3 main.py 
 
 else
     echo pendulo corriendo
