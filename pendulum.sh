@@ -4,6 +4,13 @@
 # -x flag only match processes whose name (or command line if -f is
 # specified) exactly match the pattern. 
 
+
+if ! pgrep -x "openvpn" > /dev/null
+then
+    # editar para concuerde con archivo pendulo
+    sudo openvpn /home/pi/pendulo1.ovpn
+fi
+
 if ! pgrep -f "python3 main.py" > /dev/null
 then
     python3 main.py
@@ -31,10 +38,4 @@ then
 
 
     fi
-fi
-
-if ! pgrep -x "openvpn" > /dev/null
-then
-    # editar para concuerde con archivo pendulo
-    sudo openvpn /home/pi/pendulo1.ovpn
 fi
