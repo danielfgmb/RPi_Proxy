@@ -5,7 +5,7 @@
 # specified) exactly match the pattern. 
 
 echo `date`
-echo v9
+echo v10
 # ruta
 
 
@@ -14,7 +14,7 @@ then
     # editar para concuerde con archivo pendulo
     echo activando openvpn 
     sudo openvpn /home/pi/pendulo1.ovpn > /dev/null 2>&1 &
-    echo durmiendo por 20s
+    echo durmiendo por 30s
     sleep 20
 else
     echo vpn corriendo
@@ -24,7 +24,7 @@ if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
     killall python3
-    cd /home/pi/RPi_Proxy/ && python3 main.py 
+    cd /home/pi/RPi_Proxy/ && python3 main.py > /dev/null 2>&1 &
 
 else
     echo pendulo corriendo
