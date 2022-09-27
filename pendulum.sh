@@ -21,7 +21,7 @@ if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
 
-    sh start-hw-control.sh > xd3.txt 2>&1 &
+    sh start-hw-control.sh > /dev/null 2>&1 &
 else
     echo pendulo corriendo
 fi
