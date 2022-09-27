@@ -15,7 +15,8 @@ fi
 if ! pgrep -f "python3 main.py" > /dev/null
 then
     echo activando pendulo 
-    sudo python3 main.py > /dev/null 2>&1 &
+    killall python3
+    python3 main.py > /dev/null 2>&1 &
 fi
 
 if ! pgrep -x "ffmpeg" > /dev/null
