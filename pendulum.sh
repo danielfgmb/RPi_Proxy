@@ -5,8 +5,18 @@
 # specified) exactly match the pattern. 
 
 
-if ! pgrep -x "openvpn" > /dev/null || ! pgrep -f "python3 main.py" > /dev/null || ! pgrep -x "ffmpeg" > /dev/null
+if ! pgrep -x "openvpn" > /dev/null
 then
     # editar para concuerde con archivo pendulo
-    sudo openvpn /home/pi/pendulo1.ovpn ; python3 main.py ; sh video-stream.sh
+    sudo openvpn /home/pi/pendulo1.ovpn > /dev/null 2>&1 &
+fi
+
+if ! pgrep -f "python3 main.py" > /dev/null
+then
+    sudo python3 main.py > /dev/null 2>&1 &
+fi
+
+if ! pgrep -x "ffmpeg" > /dev/null
+then
+    sh ./video-stream.sh > /dev/null 2>&1 &
 fi
