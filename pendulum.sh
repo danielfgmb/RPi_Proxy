@@ -6,7 +6,7 @@
 
 echo `date`
 # ruta
-cd /home/pi/RPi_Proxy/
+
 
 if ! pgrep -x "openvpn" > /dev/null
 then
