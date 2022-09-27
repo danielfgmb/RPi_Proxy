@@ -6,6 +6,7 @@
 
 echo `date`
 
+
 if ! pgrep -x "openvpn" > /dev/null
 then
     # editar para concuerde con archivo pendulo
@@ -18,8 +19,7 @@ fi
 if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
-    killall python3
-    python3 main.py > /dev/null 2>&1 &
+    sh ./start-hw-control.sh > /dev/null 2>&1 &
 else
     echo pendulo corriendo
 fi
@@ -27,7 +27,7 @@ fi
 if ! pgrep -x "ffmpeg" > /dev/null
 then
     echo activando transmision
-    sh ./video-stream.sh > /dev/null 2>&1 &
+    sudo sh ./video-stream.sh > /dev/null 2>&1 &
 else
     echo ffmpeg corriendo
 fi
