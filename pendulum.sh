@@ -8,5 +8,5 @@
 if ! pgrep -x "openvpn" > /dev/null || ! pgrep -f "python3 main.py" > /dev/null || ! pgrep -x "ffmpeg" > /dev/null
 then
     # editar para concuerde con archivo pendulo
-    sudo nohup openvpn /home/pi/pendulo1.ovpn ; python3 main.py ; sh video-stream.sh
+    sudo openvpn /home/pi/pendulo1.ovpn ; python3 main.py ; sh video-stream.sh
 fi
