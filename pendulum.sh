@@ -15,7 +15,7 @@ else
     echo vpn corriendo
 fi
 
-if ! pgrep -f "python3 main.py" > /dev/null
+if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
     killall python3
