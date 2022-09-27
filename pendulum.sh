@@ -5,7 +5,8 @@
 # specified) exactly match the pattern. 
 
 echo `date`
-
+# ruta
+cd /home/pi/RPi_Proxy/
 
 if ! pgrep -x "openvpn" > /dev/null
 then
@@ -19,7 +20,8 @@ fi
 if ! pgrep -x "python3" > /dev/null
 then
     echo activando pendulo 
-    sh ./start-hw-control.sh > /dev/null 2>&1 &
+
+    sh start-hw-control.sh > xd3.txt 2>&1 &
 else
     echo pendulo corriendo
 fi
@@ -27,7 +29,7 @@ fi
 if ! pgrep -x "ffmpeg" > /dev/null
 then
     echo activando transmision
-    sudo sh ./video-stream.sh > /dev/null 2>&1 &
+    sudo nohup sh ./video-stream.sh > /dev/null 2>&1 &
 else
     echo ffmpeg corriendo
 fi
